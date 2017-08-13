@@ -5,6 +5,8 @@ import org.junit.runner.RunWith
 import org.scalatest.{ FunSpec, Matchers }
 import org.scalatest.junit.JUnitRunner
 import org.beangle.commons.io.DefaultBinarySerializer
+import java.io.ObjectInputStream
+import java.io.ByteArrayInputStream
 
 @RunWith(classOf[JUnitRunner])
 class FSTSerializerTest extends FunSpec with Matchers with Logging {
@@ -13,7 +15,7 @@ class FSTSerializerTest extends FunSpec with Matchers with Logging {
 
   val account = new Account("0001", "root")
   account.remoteToken = None
-  account.authorities = "12, 3, 4"
+  account.authorities = Set(12L, 3L, 4L)
   account.details = Map("category" -> "1")
 
   describe("FSTSerializer") {
@@ -30,6 +32,7 @@ class FSTSerializerTest extends FunSpec with Matchers with Logging {
       val data = DefaultBinarySerializer.serialize(account, Map.empty)
       val newAccount = DefaultBinarySerializer.deserialize(data, Map.empty).asInstanceOf[Account]
       assert(newAccount.authorities == account.authorities)
+      assert(newAccount.authorities.contains(12L))
     }
   }
 
