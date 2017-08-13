@@ -29,8 +29,15 @@ class FSTSerializer extends BinarySerializer {
 
   var conf: FSTConfiguration = FSTConfiguration.createDefaultConfiguration()
 
+  conf.registerClass(classOf[Some[_]])
+  conf.registerClass(None.getClass)
+
   override def serialize(data: Any, params: Map[String, Any]): Array[Byte] = {
     conf.asByteArray(data)
+  }
+
+  override def register(clazz: Class[_]): Unit = {
+    conf.registerClass(clazz)
   }
 
   override def deserialize(bits: Array[Byte], params: Map[String, Any]): AnyRef = {
