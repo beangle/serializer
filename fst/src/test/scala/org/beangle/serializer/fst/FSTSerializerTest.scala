@@ -23,12 +23,9 @@ class FSTSerializerTest extends FunSpec with Matchers with Logging {
   describe("FSTSerializer") {
     it("serialize") {
       serializer.registerClass(classOf[Account])
-      val os = new ByteArrayOutputStream
-      serializer.serialize(account, os, Map.empty)
-      val data = os.toByteArray()
+      val data = serializer.toBytes(account)
       println("Account data has " + data.length + " bytes using fst serializer.")
-      val is = new ByteArrayInputStream(data)
-      val newAccount = serializer.deserialize(classOf[Account], is, Map.empty)
+      val newAccount = serializer.fromBytes(classOf[Account], data)
       assert(newAccount.remoteToken == Some("OTHER_token"))
     }
   }
@@ -36,12 +33,9 @@ class FSTSerializerTest extends FunSpec with Matchers with Logging {
   describe("DefaultBinarySerializer") {
     it("serialize") {
       DefaultBinarySerializer.registerClass(classOf[Account])
-      val os = new ByteArrayOutputStream
-      DefaultBinarySerializer.serialize(account, os, Map.empty)
-      val data = os.toByteArray()
+      val data = DefaultBinarySerializer.toBytes(account)
       println("Account data has " + data.length + " bytes using default serializer.")
-      val is = new ByteArrayInputStream(data)
-      val newAccount = DefaultBinarySerializer.deserialize(classOf[Account], is, Map.empty)
+      val newAccount = DefaultBinarySerializer.fromBytes(classOf[Account], data)
       assert(newAccount.authorities == account.authorities)
       assert(newAccount.authorities.contains("12"))
     }

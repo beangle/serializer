@@ -19,12 +19,9 @@ class ProtobufSerializerTest extends FunSpec with Matchers with Logging {
       val serializer = new ProtobufSerializer()
       serializer.registerClass(classOf[Account])
 
-      val os = new ByteArrayOutputStream
-      serializer.serialize(account, os, Map.empty)
-      val data = os.toByteArray()
+      val data = serializer.toBytes(account)
       println("Account data has " + data.length + " bytes using protobuf serializer.")
-      val is = new ByteArrayInputStream(data)
-      val newAccount = serializer.deserialize(classOf[Account], is, Map.empty)
+      val newAccount = serializer.fromBytes(classOf[Account], data)
       assert(newAccount.remoteToken == Some("OTHER_token"))
     }
   }
