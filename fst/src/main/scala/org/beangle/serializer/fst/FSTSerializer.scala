@@ -50,4 +50,12 @@ class FSTSerializer extends BinarySerializer {
     conf.getObjectInput(is).readObject().asInstanceOf[T]
   }
 
+  override def asBytes(data: Any): Array[Byte] = {
+    conf.asByteArray(data)
+  }
+
+  override def asObject[T](clazz: Class[T], data: Array[Byte]): T = {
+    conf.asObject(data).asInstanceOf[T]
+  }
+
 }

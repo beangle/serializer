@@ -10,4 +10,5 @@ class ProtobufSerializer extends AbstractBinarySerializer {
   override def registerClass(clazz: Class[_]): Unit = {
     register(clazz, ClassLoaders.newInstance(clazz.getName + "ProtobufSerializer"))
   }
+
 }
