@@ -1,4 +1,4 @@
-package org.beangle.serializer.fst
+package org.beangle.serializer.protobuf
 
 import java.io.{ Externalizable, ObjectInput, ObjectOutput }
 import java.security.Principal

@@ -21,6 +21,8 @@ package org.beangle.serializer.fst
 import org.beangle.commons.io.BinarySerializer
 import org.nustaq.serialization.FSTConfiguration
 import org.beangle.commons.bean.Initializing
+import java.io.OutputStream
+import java.io.InputStream
 
 /**
  * @author chaostone
@@ -32,16 +34,30 @@ class FSTSerializer extends BinarySerializer {
   conf.registerClass(classOf[Some[_]])
   conf.registerClass(None.getClass)
 
-  override def serialize(data: Any, params: Map[String, Any]): Array[Byte] = {
-    conf.asByteArray(data)
+  override def serialize(data: Any, os: OutputStream, params: Map[String, Any]): Unit = {
+    // this code cannot work,why?
+    //    val oo = conf.getObjectOutput(os)
+    //    oo.writeObject(data, data.getClass)
+    //    oo.flush()
+    os.write(conf.asByteArray(data))
   }
 
-  override def register(clazz: Class[_]): Unit = {
+  override def registerClass(clazz: Class[_]): Unit = {
     conf.registerClass(clazz)
   }
 
-  override def deserialize(bits: Array[Byte], params: Map[String, Any]): AnyRef = {
-    conf.asObject(bits)
+  override def deserialize[T](clazz: Class[T], is: InputStream, params: Map[String, Any]): T = {
+    val rs = conf.getObjectInput(is).readObject().asInstanceOf[T]
+    is.close()
+    rs
+  }
+
+  override def asBytes(data: Any): Array[Byte] = {
+    conf.asByteArray(data)
+  }
+
+  override def asObject[T](clazz: Class[T], data: Array[Byte]): T = {
+    conf.asObject(data).asInstanceOf[T]
   }
 
 }
