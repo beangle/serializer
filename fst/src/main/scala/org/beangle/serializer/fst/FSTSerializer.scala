@@ -47,7 +47,9 @@ class FSTSerializer extends BinarySerializer {
   }
 
   override def deserialize[T](clazz: Class[T], is: InputStream, params: Map[String, Any]): T = {
-    conf.getObjectInput(is).readObject().asInstanceOf[T]
+    val rs = conf.getObjectInput(is).readObject().asInstanceOf[T]
+    is.close()
+    rs
   }
 
   override def asBytes(data: Any): Array[Byte] = {
