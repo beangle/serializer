@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-scala</artifactId>
-    <version>24.2</version>
+    <version>24.5</version>
   </parent>
   <groupId>org.beangle.serializer</groupId>
   <artifactId>beangle-serializer-parent_2.12</artifactId>
@@ -39,10 +39,10 @@
   </scm>
 
   <properties>
-    <commons.version>5.0.0.M6</commons.version>
-    <cdi.version>0.0.12</cdi.version>
-    <fst.version>2.52</fst.version>
-    <protobuf.version>3.4.0</protobuf.version>
+    <commons.version>5.0.0</commons.version>
+    <cdi.version>0.0.14</cdi.version>
+    <fst.version>2.56</fst.version>
+    <protobuf.version>3.5.1</protobuf.version>
   </properties>
 
   <dependencyManagement>
