@@ -42,9 +42,9 @@ class JsonSerializerTest extends FunSpec with Matchers {
       jsonp.alias("person", classOf[Person])
       jsonp.alias("address", classOf[Address])
       jsonp.alias("list", classOf[::[_]])
-      //println(json.serialize(List(Some(new Person("002", "admin2")), new Person("001", "admin"))))
+      //println(jsonp.serialize(List(Some(new Person("002", "admin2")), new Person("001", "admin"))))
       //println(jsonp.serialize(Array("a", "b")))
-      //println(json.serialize(new Member))
+      //println(jsonp.serialize(new Member))
     }
   }
 }

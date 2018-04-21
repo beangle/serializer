@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle.serializer</groupId>
     <artifactId>beangle-serializer-parent_2.12</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>beangle-serializer-json_2.12</artifactId>

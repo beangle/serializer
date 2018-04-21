@@ -53,7 +53,7 @@ class JsonObjectMarshaller(val mapper: Mapper) extends Marshaller[Properties] {
     while (enum.hasNext) {
       val key = enum.next()
       val value = source(key).asInstanceOf[AnyRef]
-      if (null != value) {
+      if (null != value && None != value) {
         writer.startNode(mapper.serializedMember(source.getClass(), key), value.getClass)
         context.marshal(value)
         writer.endNode()
