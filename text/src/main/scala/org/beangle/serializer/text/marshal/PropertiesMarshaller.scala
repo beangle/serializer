@@ -31,7 +31,7 @@ class PropertiesMarshaller(val mapper: Mapper) extends Marshaller[ju.Properties]
     val enum = source.propertyNames()
     while (enum.hasMoreElements) {
       val key = enum.nextElement.asInstanceOf[String]
-      val value = source.getProperty(key)
+      val value = extractOption(source.getProperty(key))
       if (null != value) {
         writer.startNode(mapper.serializedMember(source.getClass(), key), value.getClass)
         context.marshal(value)
@@ -52,7 +52,7 @@ class JsonObjectMarshaller(val mapper: Mapper) extends Marshaller[Properties] {
     val enum = source.keys.iterator
     while (enum.hasNext) {
       val key = enum.next()
-      val value = source(key).asInstanceOf[AnyRef]
+      val value = extractOption(source(key)).asInstanceOf[AnyRef]
       if (null != value && None != value) {
         writer.startNode(mapper.serializedMember(source.getClass(), key), value.getClass)
         context.marshal(value)

@@ -22,6 +22,9 @@ import org.beangle.serializer.text.io.StreamWriter
 
 import Type.Type
 
+/**
+ * 具体某一类型的序列化
+ */
 trait Marshaller[T] {
   def marshal(source: T, writer: StreamWriter, context: MarshallingContext): Unit
 
@@ -33,11 +36,13 @@ trait Marshaller[T] {
     Type.String
   }
 
-  def extractOption(item: AnyRef): AnyRef = {
+  def extractOption(item: Any): Any = {
     if (item == null) return null
     else {
-      if (item.isInstanceOf[Option[_]]) item.asInstanceOf[Option[AnyRef]].getOrElse(null)
-      else item
+      item match {
+        case o: Option[_] => o.getOrElse(null).asInstanceOf[AnyRef]
+        case _            => item
+      }
     }
   }
 }

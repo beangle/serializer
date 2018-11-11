@@ -13,9 +13,6 @@
 
   <modules>
     <module>text</module>
-    <module>xml</module>
-    <module>json</module>
-    <module>csv</module>
     <module>fst</module>
     <module>protobuf</module>
   </modules>

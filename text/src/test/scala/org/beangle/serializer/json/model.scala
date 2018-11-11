@@ -21,6 +21,8 @@ package org.beangle.serializer.json
 import java.math.BigInteger
 import java.{ util => ju }
 import java.net.URL
+import org.beangle.commons.collection.Properties
+
 class Person(var code: String, var name: String) {
   var address = Address("minzu", "500", "jiading")
   var mobile: String = _
@@ -41,6 +43,10 @@ class Person(var code: String, var name: String) {
                 A very famous Basketball Player, and
                 so ... & <>"""
   var families = Map("wife" -> "a girl", "daught" -> "ketty")
+
+  var friends = new Properties()
+  friends.put("jack", Some("Jack Jackson"))
+  friends.put("alice", Some("Alice Backy"))
 
   val sidekick = this
 }
