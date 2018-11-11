@@ -18,31 +18,6 @@
  */
 package org.beangle.serializer.text.marshal
 
-import org.beangle.serializer.text.io.StreamWriter
+class PropertiesSerializerTest {
 
-import Type.Type
-
-/**
- * 具体某一类型的序列化
- */
-trait Marshaller[T] {
-  def marshal(source: T, writer: StreamWriter, context: MarshallingContext): Unit
-
-  def support(clazz: Class[_]): Boolean = {
-    true
-  }
-
-  def targetType: Type = {
-    Type.String
-  }
-
-  def extractOption(item: Any): Any = {
-    if (item == null) return null
-    else {
-      item match {
-        case o: Option[_] => o.getOrElse(null).asInstanceOf[AnyRef]
-        case _            => item
-      }
-    }
-  }
 }
