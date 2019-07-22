@@ -20,8 +20,9 @@ package org.beangle.serializer.fst
 
 import org.beangle.commons.logging.Logging
 import org.junit.runner.RunWith
-import org.scalatest.{ FunSpec, Matchers }
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatestplus.junit.JUnitRunner
 import org.beangle.commons.io.DefaultBinarySerializer
 import java.io.ObjectInputStream
 import java.io.ByteArrayInputStream
@@ -29,7 +30,7 @@ import java.io.ByteArrayOutputStream
 import java.io.ObjectOutputStream
 
 @RunWith(classOf[JUnitRunner])
-class FSTSerializerTest extends FunSpec with Matchers with Logging {
+class FSTSerializerTest extends AnyFunSpec with Matchers with Logging {
 
   val serializer = new FSTSerializer
 

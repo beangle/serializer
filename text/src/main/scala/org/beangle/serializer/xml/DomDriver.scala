@@ -21,11 +21,11 @@ package org.beangle.serializer.xml
 import java.io.Writer
 
 import org.beangle.commons.io.BufferedWriter
-import org.beangle.serializer.text.io.{ AbstractDriver, StreamWriter }
+import org.beangle.serializer.text.io.{AbstractDriver, StreamWriter}
 
 class DomDriver(encoding: String = "UTF-8") extends AbstractDriver(encoding) with XmlDriver {
 
   def createWriter(out: Writer, params: Map[String, Any]): StreamWriter = {
-    return new PrettyXmlWriter(new BufferedWriter(out))
+    new PrettyXmlWriter(new BufferedWriter(out))
   }
 }

@@ -51,20 +51,20 @@ class PageMarshaller(val mapper: Mapper) extends Marshaller[Page[Object]] {
     }
   }
 
-  protected def writeItem(item: Object, writer: StreamWriter, context: MarshallingContext) {
+  protected def writeItem(item: Object, writer: StreamWriter, context: MarshallingContext): Unit = {
     val realitem = extractOption(item)
     if (realitem == null) {
       writer.startNode(mapper.serializedClass(classOf[Null]), classOf[Null])
     } else {
-      val name = mapper.serializedClass(realitem.getClass())
-      writer.startNode(name, realitem.getClass())
+      val name = mapper.serializedClass(realitem.getClass)
+      writer.startNode(name, realitem.getClass)
       context.marshal(realitem)
     }
     writer.endNode()
   }
 
   override def support(clazz: Class[_]): Boolean = {
-    (classOf[Page[_]].isAssignableFrom(clazz))
+    classOf[Page[_]].isAssignableFrom(clazz)
   }
 
   override def targetType: Type = {

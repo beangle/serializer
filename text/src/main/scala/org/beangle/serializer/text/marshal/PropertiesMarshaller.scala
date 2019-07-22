@@ -18,7 +18,7 @@
  */
 package org.beangle.serializer.text.marshal
 
-import java.{ util => ju }
+import java.{util => ju}
 
 import org.beangle.commons.collection.Properties
 import org.beangle.serializer.text.io.StreamWriter
@@ -33,7 +33,7 @@ class PropertiesMarshaller(val mapper: Mapper) extends Marshaller[ju.Properties]
       val key = enum.nextElement.asInstanceOf[String]
       val value = extractOption(source.getProperty(key))
       if (null != value) {
-        writer.startNode(mapper.serializedMember(source.getClass(), key), value.getClass)
+        writer.startNode(mapper.serializedMember(source.getClass, key), value.getClass)
         context.marshal(value)
         writer.endNode()
       }
@@ -54,7 +54,7 @@ class JsonObjectMarshaller(val mapper: Mapper) extends Marshaller[Properties] {
       val key = enum.next()
       val value = extractOption(source(key)).asInstanceOf[AnyRef]
       if (null != value && None != value) {
-        writer.startNode(mapper.serializedMember(source.getClass(), key), value.getClass)
+        writer.startNode(mapper.serializedMember(source.getClass, key), value.getClass)
         context.marshal(value)
         writer.endNode()
       }

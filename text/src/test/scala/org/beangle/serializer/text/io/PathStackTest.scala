@@ -19,11 +19,12 @@
 package org.beangle.serializer.text.io
 
 import org.junit.runner.RunWith
-import org.scalatest.{ FunSpec, Matchers }
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class PathStackTest extends FunSpec with Matchers {
+class PathStackTest extends AnyFunSpec with Matchers {
 
   describe("PathStack") {
     it("push and pop") {

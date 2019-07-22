@@ -20,9 +20,7 @@ package org.beangle.serializer.text.marshal
 
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
-import Type.Type
-
-import java.{ util => ju }
+import org.beangle.serializer.text.marshal.Type.Type
 
 class ArrayMarshaller(val mapper: Mapper) extends Marshaller[Object] {
 
@@ -32,8 +30,8 @@ class ArrayMarshaller(val mapper: Mapper) extends Marshaller[Object] {
       if (realitem == null) {
         writer.startNode(mapper.serializedClass(classOf[Null]), classOf[Null])
       } else {
-        val name = mapper.serializedClass(realitem.getClass())
-        writer.startNode(name, realitem.getClass())
+        val name = mapper.serializedClass(realitem.getClass)
+        writer.startNode(name, realitem.getClass)
         context.marshal(realitem)
       }
       writer.endNode()

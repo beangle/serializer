@@ -20,11 +20,11 @@ package org.beangle.serializer.csv
 
 import java.io.Writer
 
-import scala.collection.mutable.ListBuffer
-
 import org.beangle.commons.lang.reflect.BeanInfos
 import org.beangle.serializer.text.io.AbstractWriter
 import org.beangle.serializer.text.marshal.MarshallingContext
+
+import scala.collection.mutable.ListBuffer
 
 class DefaultCsvWriter(out: Writer) extends AbstractWriter {
   val innerWriter = new org.beangle.commons.csv.CsvWriter(out)
@@ -50,7 +50,7 @@ class DefaultCsvWriter(out: Writer) extends AbstractWriter {
       buf.clear()
     }
   }
-  def write(nextLine: Array[String]) {
+  def write(nextLine: Array[String]): Unit = {
     innerWriter.write(nextLine)
   }
 

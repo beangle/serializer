@@ -19,21 +19,19 @@
 package org.beangle.serializer.xml
 
 import java.io.Writer
-import scala.collection.mutable.Stack
-import org.beangle.serializer.text.io.{ AbstractWriter, StreamException }
-import org.beangle.commons.collection.FastStack
-import org.beangle.serializer.text.io.PathStack
+
+import org.beangle.serializer.text.io.{AbstractWriter, StreamException}
 import org.beangle.serializer.text.marshal.MarshallingContext
 
 object PrettyXmlWriter {
-  val NULL = "&#x0;".toCharArray()
-  val AMP = "&amp;".toCharArray()
-  val LT = "&lt;".toCharArray()
-  val GT = "&gt;".toCharArray()
-  val CR = "&#xd;".toCharArray()
-  val QUOT = "&quot;".toCharArray()
-  val APOS = "&apos;".toCharArray()
-  val CLOSE = "</".toCharArray()
+  val NULL: Array[Char] = "&#x0;".toCharArray
+  val AMP: Array[Char] = "&amp;".toCharArray
+  val LT: Array[Char] = "&lt;".toCharArray
+  val GT: Array[Char] = "&gt;".toCharArray
+  val CR: Array[Char] = "&#xd;".toCharArray
+  val QUOT: Array[Char] = "&quot;".toCharArray
+  val APOS: Array[Char] = "&apos;".toCharArray
+  val CLOSE: Array[Char] = "</".toCharArray
 }
 
 class PrettyXmlWriter(writer: Writer, lineIndenter: Array[Char], newLine: Array[Char]) extends AbstractWriter {
@@ -108,6 +106,7 @@ class PrettyXmlWriter(writer: Writer, lineIndenter: Array[Char], newLine: Array[
   protected def writeText(text: String): Unit = {
     writeText(text, false)
   }
+
   private def writerChar(c: Char): Unit = {
     if (c <= '\u001f' || c > '\ud7ff' && c < '\ue000' || c >= '\ufffe')
       throw new StreamException("Invalid character 0x" + Integer.toHexString(c) + " in XML 1.0 stream")
@@ -119,10 +118,11 @@ class PrettyXmlWriter(writer: Writer, lineIndenter: Array[Char], newLine: Array[
       this.writer.write(';')
     }
   }
-  private def writeText(text: String, isAttribute: Boolean) {
+
+  private def writeText(text: String, isAttribute: Boolean): Unit = {
     val length = text.length()
     (0 until length) foreach { i =>
-      var c = text.charAt(i)
+      val c = text.charAt(i)
       c match {
         case '&' => this.writer.write(AMP)
         case '<' => this.writer.write(LT)
@@ -136,7 +136,7 @@ class PrettyXmlWriter(writer: Writer, lineIndenter: Array[Char], newLine: Array[
     }
   }
 
-  private def finishTag(depth: Int) {
+  private def finishTag(depth: Int): Unit = {
     if (tagInProgress) {
       writer.write('>')
       tagInProgress = false
@@ -148,9 +148,9 @@ class PrettyXmlWriter(writer: Writer, lineIndenter: Array[Char], newLine: Array[
     tagIsEmpty = false
   }
 
-  protected def indentNewLine(depth: Int) {
+  protected def indentNewLine(depth: Int): Unit = {
     writer.write(newLine)
-    (0 until depth) foreach (i => writer.write(lineIndenter))
+    (0 until depth) foreach (_ => writer.write(lineIndenter))
   }
 
   override def start(context: MarshallingContext): Unit = {

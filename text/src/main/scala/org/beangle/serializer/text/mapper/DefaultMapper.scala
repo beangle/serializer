@@ -19,14 +19,13 @@
 package org.beangle.serializer.text.mapper
 
 import java.io.File
-import java.net.{ URI, URL }
-import java.{ util => ju }
-import java.{ lang => jl }
-import scala.math.{ BigDecimal, BigInt }
-import org.beangle.commons.lang.{ ClassLoaders, Strings }
-import scala.collection.convert.Wrappers.JListWrapper
-import scala.collection.convert.Wrappers.JSetWrapper
-import scala.collection.convert.Wrappers.JMapWrapper
+import java.net.{URI, URL}
+import java.{lang => jl, util => ju}
+
+import org.beangle.commons.lang.{ClassLoaders, Strings}
+
+import scala.math.BigDecimal
+
 class DefaultMapper extends Mapper {
 
   val classAlias = new collection.mutable.HashMap[Class[_], String]
@@ -47,7 +46,7 @@ class DefaultMapper extends Mapper {
     try {
       classAlias.put(ClassLoaders.load(className), alias)
     } catch {
-      case e: Throwable =>
+      case _: Throwable =>
     }
   }
 
@@ -65,7 +64,7 @@ class DefaultMapper extends Mapper {
     memberName
   }
 
-  private def aliasBuildin() {
+  private def aliasBuildin(): Unit = {
     //basic
     alias("int", classOf[jl.Integer])
     alias("char", classOf[jl.Character])
@@ -96,15 +95,15 @@ class DefaultMapper extends Mapper {
     alias("empty-list", ju.Collections.emptyList.getClass)
     alias("empty-map", ju.Collections.emptyMap.getClass)
     alias("empty-set", ju.Collections.emptySet.getClass)
-    alias("singleton-list", ju.Collections.singletonList(this).getClass())
-    alias("singleton-map", ju.Collections.singletonMap(this, null).getClass())
-    alias("singleton-set", ju.Collections.singleton(this).getClass())
+    alias("singleton-list", ju.Collections.singletonList(this).getClass)
+    alias("singleton-map", ju.Collections.singletonMap(this, null).getClass)
+    alias("singleton-set", ju.Collections.singleton(this).getClass)
 
     //scala collection
     alias("list", classOf[::[_]])
-    alias("list", classOf[JListWrapper[_]])
-    alias("set", classOf[JSetWrapper[_]])
-    alias("map", classOf[JMapWrapper[_, _]])
+    alias("list", classOf[collection.Seq[_]])
+    alias("set", classOf[collection.Set[_]])
+    alias("map", classOf[collection.Map[_, _]])
     alias("sql-timestamp", "java.sql.Timestamp")
     alias("sql-time", "java.sql.Time")
     alias("sql-date", "java.sql.Date")

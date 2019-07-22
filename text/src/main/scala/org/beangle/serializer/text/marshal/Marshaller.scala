@@ -19,12 +19,11 @@
 package org.beangle.serializer.text.marshal
 
 import org.beangle.serializer.text.io.StreamWriter
-
-import Type.Type
+import org.beangle.serializer.text.marshal.Type.Type
 
 /**
- * 具体某一类型的序列化
- */
+  * 具体某一类型的序列化
+  */
 trait Marshaller[T] {
   def marshal(source: T, writer: StreamWriter, context: MarshallingContext): Unit
 
@@ -37,11 +36,12 @@ trait Marshaller[T] {
   }
 
   def extractOption(item: Any): Any = {
-    if (item == null) return null
-    else {
+    if (item == null) {
+      null
+    } else {
       item match {
-        case o: Option[_] => o.getOrElse(null).asInstanceOf[AnyRef]
-        case _            => item
+        case o: Option[Any] => o.orNull.asInstanceOf[AnyRef]
+        case _ => item
       }
     }
   }

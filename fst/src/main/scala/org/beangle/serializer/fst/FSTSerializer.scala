@@ -18,11 +18,10 @@
  */
 package org.beangle.serializer.fst
 
+import java.io.{InputStream, OutputStream}
+
 import org.beangle.commons.io.BinarySerializer
 import org.nustaq.serialization.FSTConfiguration
-import org.beangle.commons.bean.Initializing
-import java.io.OutputStream
-import java.io.InputStream
 
 /**
  * @author chaostone

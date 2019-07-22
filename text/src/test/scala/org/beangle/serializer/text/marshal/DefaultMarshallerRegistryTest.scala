@@ -18,16 +18,18 @@
  */
 package org.beangle.serializer.text.marshal
 
-import java.{ util => ju }
-import org.junit.runner.RunWith
-import org.scalatest.{ Finders, FunSpec, Matchers }
-import org.scalatest.junit.JUnitRunner
+import java.{util => ju}
+
 import org.beangle.commons.collection.page.SinglePage
-import org.beangle.serializer.text.mapper.DefaultMapper
 import org.beangle.serializer.text.Skill
+import org.beangle.serializer.text.mapper.DefaultMapper
+import org.junit.runner.RunWith
+import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class DefaultMarshallerRegistryTest extends FunSpec with Matchers {
+class DefaultMarshallerRegistryTest extends AnyFunSpec with Matchers {
 
   val registry = new DefaultMarshallerRegistry(new DefaultMapper)
 

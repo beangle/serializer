@@ -18,9 +18,9 @@
  */
 package org.beangle.serializer.text.marshal
 
+import org.beangle.commons.collection.page.Page
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
-import org.beangle.commons.collection.page.Page
 
 class IterableMarshaller(mapper: Mapper) extends AbstractIterableMarshaller[Iterable[Object]](mapper) {
 
@@ -31,6 +31,6 @@ class IterableMarshaller(mapper: Mapper) extends AbstractIterableMarshaller[Iter
   }
 
   override def support(clazz: Class[_]): Boolean = {
-    (!classOf[collection.Map[_, _]].isAssignableFrom(clazz)) && (!(classOf[Page[_]].isAssignableFrom(clazz)))
+    !classOf[collection.Map[_, _]].isAssignableFrom(clazz) && !classOf[Page[_]].isAssignableFrom(clazz)
   }
 }

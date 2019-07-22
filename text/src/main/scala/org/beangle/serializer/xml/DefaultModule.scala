@@ -22,7 +22,7 @@ import org.beangle.cdi.bind.BindModule
 
 object DefaultModule extends BindModule {
 
-  protected override def binding() {
+  protected override def binding(): Unit = {
     bind(classOf[DomDriver]).constructor("UTF-8")
     bind("Serializer.xml", classOf[XmlSerializer])
   }

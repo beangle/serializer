@@ -20,14 +20,13 @@ package org.beangle.serializer.text.marshal
 
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
+import org.beangle.serializer.text.marshal.Type.Type
 
-import Type.Type
-
-class TupleConvertor(mapper: Mapper) extends Marshaller[Product] {
+class TupleMarshaller(mapper: Mapper) extends Marshaller[Product] {
   def marshal(source: Product, writer: StreamWriter, context: MarshallingContext): Unit = {
     val iter = source.productIterator
     var i = 0
-    writer.addAttribute("class", "tuple");
+    writer.addAttribute("class", "tuple")
     while (iter.hasNext) {
       val item = iter.next
       i = i + 1
@@ -36,10 +35,10 @@ class TupleConvertor(mapper: Mapper) extends Marshaller[Product] {
   }
 
   override def support(clazz: Class[_]): Boolean = {
-    clazz.getSimpleName().startsWith("Tuple")
+    clazz.getSimpleName.startsWith("Tuple")
   }
 
-  protected def writeItem(item: AnyRef, writer: StreamWriter, context: MarshallingContext, index: Int) {
+  protected def writeItem(item: AnyRef, writer: StreamWriter, context: MarshallingContext, index: Int): Unit = {
     val realitem = extractOption(item)
     if (realitem == null) {
       writer.startNode(mapper.serializedClass(classOf[Null]), classOf[Null])

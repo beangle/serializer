@@ -19,12 +19,12 @@
 package org.beangle.serializer.csv
 
 import org.junit.runner.RunWith
-import org.scalatest.{ Finders, FunSpec, Matchers }
-import org.scalatest.junit.JUnitRunner
-import org.beangle.commons.collection.page.SinglePage
+import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class CsvSerializerTest extends FunSpec with Matchers {
+class CsvSerializerTest extends AnyFunSpec with Matchers {
 
   describe("CsvSerializer") {
     it("serializer csv ") {
