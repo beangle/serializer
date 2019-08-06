@@ -24,7 +24,7 @@ import org.beangle.serializer.text.marshal.DefaultMarshallerRegistry
 
 object DefaultModule extends BindModule {
 
-  protected override def binding() {
+  protected override def binding(): Unit = {
     bind(classOf[DefaultMarshallerRegistry])
     bind(classOf[DefaultMapper])
   }

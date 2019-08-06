@@ -28,7 +28,7 @@ abstract class AbstractJsonWriter(val writer: Writer, val registry: MarshallerRe
 
   override def setValue(text: String): Unit = {
     val targetType = registry.lookup(this.pathStack.peek().clazz).targetType
-    writeText(text.toCharArray, (targetType != Boolean && targetType != Number))
+    writeText(text.toCharArray, targetType != Boolean && targetType != Number)
   }
 
   protected def writeText(text: Array[Char], quoted: Boolean): Unit = {

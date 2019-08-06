@@ -18,20 +18,17 @@
  */
 package org.beangle.serializer.text.marshal
 
-import java.beans.Transient
-
+import org.beangle.commons.lang.reflect.BeanInfos
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
-
-import Type.Type
-import org.beangle.commons.lang.reflect.BeanInfos
+import org.beangle.serializer.text.marshal.Type.Type
 
 class BeanMarshaller(val mapper: Mapper) extends Marshaller[Object] {
 
   def marshal(source: Object, writer: StreamWriter, context: MarshallingContext): Unit = {
     val sourceType = source.getClass
     val properties = context.getProperties(sourceType)
-    if (!properties.isEmpty) {
+    if (properties.nonEmpty) {
       val getters = BeanInfos.get(sourceType).properties
       properties foreach { name =>
         val getter = getters(name)

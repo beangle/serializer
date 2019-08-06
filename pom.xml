@@ -3,12 +3,12 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-scala</artifactId>
-    <version>25.2</version>
+    <version>26.2</version>
   </parent>
   <groupId>org.beangle.serializer</groupId>
-  <artifactId>beangle-serializer-parent_2.12</artifactId>
+  <artifactId>beangle-serializer-parent_2.13</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.10</version>
+  <version>0.0.11</version>
   <name>Beangle Serializer Parent</name>
 
   <modules>
@@ -36,8 +36,8 @@
   </scm>
 
   <properties>
-    <commons.version>5.1.5</commons.version>
-    <cdi.version>0.0.18</cdi.version>
+    <commons.version>5.1.8</commons.version>
+    <cdi.version>0.1.1</cdi.version>
     <fst.version>2.57</fst.version>
     <protobuf.version>3.7.0</protobuf.version>
   </properties>
@@ -46,17 +46,17 @@
     <dependencies>
       <dependency>
         <groupId>org.beangle.commons</groupId>
-        <artifactId>beangle-commons-core_2.12</artifactId>
+        <artifactId>beangle-commons-core_2.13</artifactId>
         <version>${commons.version}</version>
       </dependency>
       <dependency>
         <groupId>org.beangle.commons</groupId>
-        <artifactId>beangle-commons-csv_2.12</artifactId>
+        <artifactId>beangle-commons-csv_2.13</artifactId>
         <version>${commons.version}</version>
       </dependency>
       <dependency>
         <groupId>org.beangle.cdi</groupId>
-        <artifactId>beangle-cdi-api_2.12</artifactId>
+        <artifactId>beangle-cdi-api_2.13</artifactId>
         <version>${cdi.version}</version>
       </dependency>
       <dependency>
@@ -71,7 +71,7 @@
       </dependency>
       <dependency>
         <groupId>org.beangle.serializer</groupId>
-        <artifactId>beangle-serializer-text_2.12</artifactId>
+        <artifactId>beangle-serializer-text_2.13</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
@@ -80,7 +80,7 @@
   <dependencies>
     <dependency>
       <groupId>org.beangle.commons</groupId>
-      <artifactId>beangle-commons-core_2.12</artifactId>
+      <artifactId>beangle-commons-core_2.13</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -96,7 +96,7 @@
     </dependency>
     <dependency>
       <groupId>org.beangle.cdi</groupId>
-      <artifactId>beangle-cdi-api_2.12</artifactId>
+      <artifactId>beangle-cdi-api_2.13</artifactId>
     </dependency>
  </dependencies>
 </project>

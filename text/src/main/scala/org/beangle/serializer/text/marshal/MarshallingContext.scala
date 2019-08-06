@@ -18,13 +18,13 @@
  */
 package org.beangle.serializer.text.marshal
 
-import scala.collection.mutable
-import scala.language.existentials
-
-import org.beangle.commons.collection.{ IdentityMap, IdentitySet }
+import org.beangle.commons.collection.{IdentityMap, IdentitySet}
 import org.beangle.commons.lang.reflect.BeanInfos
 import org.beangle.serializer.text.StreamSerializer
-import org.beangle.serializer.text.io.{ Path, StreamWriter }
+import org.beangle.serializer.text.io.{Path, StreamWriter}
+
+import scala.collection.mutable
+import scala.language.existentials
 
 class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWriter, val registry: MarshallerRegistry, val params: Map[String, Any]) {
 
@@ -39,7 +39,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
   init()
 
   def init(): Unit = {
-    val properties = params.get("properties").getOrElse(List.empty).asInstanceOf[Seq[Tuple2[Class[_], List[String]]]]
+    val properties = params.getOrElse("properties", List.empty).asInstanceOf[Seq[(Class[_], List[String])]]
     if (serializer.hierarchical) {
       propertyMap ++= properties
     } else {
@@ -49,7 +49,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
         tuple._2 foreach { p =>
           getters.get(p) match {
             case Some(getter) => if (!isCollectionType(getter.clazz)) filted += p
-            case None         => throw new RuntimeException("cannot find property $p of class ${tuple2._1.getName}")
+            case None => throw new RuntimeException("cannot find property $p of class ${tuple2._1.getName}")
           }
         }
         propertyMap.put(tuple._1, filted.toList)
@@ -62,13 +62,13 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
         getProperties(elementType)
       case None =>
     }
-    if (!properties.isEmpty && null == elementType) elementType = properties.head._1
+    if (properties.nonEmpty && null == elementType) elementType = properties.head._1
   }
 
   def getProperties(clazz: Class[_]): List[String] = {
     val result = propertyMap.get(clazz) match {
       case Some(p) => p
-      case None => {
+      case None =>
         if (registry.lookup(clazz).targetType == Type.Object) {
           val p = searchProperties(clazz)
           if (null == p) {
@@ -91,7 +91,6 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
         } else {
           List()
         }
-      }
     }
     if (elementType == null && !isCollectionType(clazz)) elementType = clazz
     result
@@ -101,7 +100,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     val interfaces = new mutable.LinkedHashSet[Class[_]]
     val classQueue = new mutable.Queue[Class[_]]
     classQueue += targetType
-    while (!classQueue.isEmpty) {
+    while (classQueue.nonEmpty) {
       val currentClass = classQueue.dequeue
       val props = propertyMap.get(currentClass).orNull
       if (props != null) return props
@@ -109,7 +108,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
       if (superClass != null && superClass != classOf[AnyRef]) classQueue += superClass
       for (interfaceType <- currentClass.getInterfaces) addInterfaces(interfaceType, interfaces)
     }
-    var iter = interfaces.iterator
+    val iter = interfaces.iterator
     while (iter.hasNext) {
       val interfaceType = iter.next
       val props = propertyMap.get(interfaceType).orNull
@@ -118,7 +117,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     null
   }
 
-  private def addInterfaces(interfaceType: Class[_], interfaces: mutable.Set[Class[_]]) {
+  private def addInterfaces(interfaceType: Class[_], interfaces: mutable.Set[Class[_]]): Unit = {
     interfaces.add(interfaceType)
     for (inheritedInterface <- interfaceType.getInterfaces) addInterfaces(inheritedInterface, interfaces)
   }
@@ -140,7 +139,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
   }
 
   private def isCollectionType(clazz: Class[_]): Boolean = {
-    clazz.isArray() || classOf[java.util.Collection[_]].isAssignableFrom(clazz) || classOf[Iterable[_]].isAssignableFrom(clazz)
+    clazz.isArray || classOf[java.util.Collection[_]].isAssignableFrom(clazz) || classOf[Iterable[_]].isAssignableFrom(clazz)
   }
 
 }

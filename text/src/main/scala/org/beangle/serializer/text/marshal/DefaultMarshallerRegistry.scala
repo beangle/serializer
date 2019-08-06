@@ -18,20 +18,20 @@
  */
 package org.beangle.serializer.text.marshal
 
-import scala.collection.mutable
-import scala.language.existentials
-
 import org.beangle.commons.collection.IdentityCache
 import org.beangle.commons.lang.reflect.Reflections
 import org.beangle.serializer.text.SerializeException
 import org.beangle.serializer.text.mapper.Mapper
 
+import scala.collection.mutable
+import scala.language.existentials
+
 class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
 
   private val cache = new IdentityCache[Class[_], Marshaller[_]]
   /**
-   * [Object,List(BeanMarshaller,PrimitiveMarshaller)]
-   */
+    * [Object,List(BeanMarshaller,PrimitiveMarshaller)]
+    */
   private val converterMap = new mutable.HashMap[Class[_], Set[Marshaller[_]]]
 
   registerBuildin()
@@ -46,13 +46,11 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     converter.asInstanceOf[Marshaller[T]]
   }
 
-  override def register[T](converter: Marshaller[T]) {
+  override def register[T](converter: Marshaller[T]): Unit = {
     val clazz = Reflections.getGenericParamType(converter.getClass, classOf[Marshaller[_]])("T")
     converterMap.get(clazz) match {
       case Some(converters) =>
-        converters.find { each =>
-          each.getClass() == converter.getClass()
-        } match {
+        converters.find(_.getClass == converter.getClass) match {
           case Some(c) => converterMap.put(clazz, converters - c + converter)
           case None => converterMap.put(clazz, converters + converter)
         }
@@ -68,7 +66,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     register(new JavaMapEntryMarshaller(mapper))
     register(new BeanMarshaller(mapper))
     register(new ArrayMarshaller(mapper))
-    register(new TupleConvertor(mapper))
+    register(new TupleMarshaller(mapper))
     register(new PropertiesMarshaller(mapper))
     register(new PageMarshaller(mapper))
     register(new JsonObjectMarshaller(mapper))
@@ -86,7 +84,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     val interfaces = new mutable.LinkedHashSet[Class[_]]
     val classQueue = new mutable.Queue[Class[_]]
     classQueue += sourceType
-    while (!classQueue.isEmpty) {
+    while (classQueue.nonEmpty) {
       val currentClass = classQueue.dequeue
       val converter = searchSupport(sourceType, converterMap.get(currentClass))
       if (converter != null) return converter
@@ -94,7 +92,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
       if (superClass != null && superClass != classOf[AnyRef]) classQueue += superClass
       for (interfaceType <- currentClass.getInterfaces) addInterfaces(interfaceType, interfaces)
     }
-    var iter = interfaces.iterator
+    val iter = interfaces.iterator
     while (iter.hasNext) {
       val interface = iter.next
       val converter = searchSupport(sourceType, converterMap.get(interface))
@@ -122,7 +120,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     }
   }
 
-  private def addInterfaces(interfaceType: Class[_], interfaces: mutable.Set[Class[_]]) {
+  private def addInterfaces(interfaceType: Class[_], interfaces: mutable.Set[Class[_]]): Unit = {
     interfaces.add(interfaceType)
     for (inheritedInterface <- interfaceType.getInterfaces) addInterfaces(inheritedInterface, interfaces)
   }

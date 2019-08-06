@@ -18,12 +18,12 @@
  */
 package org.beangle.serializer.xml
 
-import org.beangle.commons.activation.MimeTypes
+import org.beangle.commons.activation.MediaTypes
 import org.beangle.serializer.text.{ AbstractSerializer, ReferenceByXPathSerializer }
 import org.beangle.serializer.text.mapper.{ DefaultMapper, Mapper }
 import org.beangle.serializer.text.marshal.{ DefaultMarshallerRegistry, MarshallerRegistry }
 
-import javax.activation.MimeType
+import org.beangle.commons.activation.MediaType
 
 object XmlSerializer {
   def apply(): XmlSerializer = {
@@ -38,8 +38,8 @@ object XmlSerializer {
 class XmlSerializer(val driver: XmlDriver, val mapper: Mapper, val registry: MarshallerRegistry)
     extends AbstractSerializer {
 
-  override def mediaTypes: Seq[MimeType] = {
-    List(MimeTypes.ApplicationXml)
+  override def mediaTypes: Seq[MediaType] = {
+    List(MediaTypes.ApplicationXml)
   }
 
 }
@@ -47,8 +47,8 @@ class XmlSerializer(val driver: XmlDriver, val mapper: Mapper, val registry: Mar
 class XmlXPathSerializer(val driver: XmlDriver, val mapper: Mapper, val registry: MarshallerRegistry, absolutePath: Boolean, singleNode: Boolean)
     extends ReferenceByXPathSerializer(absolutePath, singleNode) {
 
-  override def mediaTypes: Seq[MimeType] = {
-    List(MimeTypes.ApplicationXml)
+  override def mediaTypes: Seq[MediaType] = {
+    List(MediaTypes.ApplicationXml)
   }
 
 }

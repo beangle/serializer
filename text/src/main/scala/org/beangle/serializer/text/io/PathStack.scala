@@ -21,6 +21,7 @@ package org.beangle.serializer.text.io
 import org.beangle.commons.lang.primitive.MutableInt
 
 class PathElement(val name: String, val clazz: Class[_]) {}
+
 class PathStack(initialCapacity: Int = 16) {
   //point to empty slot
   private var pointer: Int = 0
@@ -28,7 +29,7 @@ class PathStack(initialCapacity: Int = 16) {
   private var elements = new Array[PathElement](initialCapacity)
   private var indexMapStack = new Array[collection.mutable.HashMap[String, MutableInt]](initialCapacity)
 
-  def push(name: String, clazz: Class[_]) {
+  def push(name: String, clazz: Class[_]): Unit = {
     if (pointer + 1 >= capacity) resizeStacks(capacity * 2)
     elements(pointer) = new PathElement(name, clazz)
 
@@ -58,8 +59,7 @@ class PathStack(initialCapacity: Int = 16) {
   def isFirstInLevel: Boolean = {
     var count = 0
     indexMapStack(pointer - 1) foreach {
-      case (c, v) =>
-        count += v.value
+      case (_, v) => count += v.value
     }
     count == 1
   }
@@ -92,9 +92,9 @@ class PathStack(initialCapacity: Int = 16) {
   }
 
   /**
-   * Current Path in stream.
-   */
-  def currentPath(): Path = {
+    * Current Path in stream.
+    */
+  def currentPath: Path = {
     val chunks = new Array[String](pointer)
     (0 until pointer) foreach { i =>
       chunks(i) = get(i)

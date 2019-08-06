@@ -18,12 +18,12 @@
  */
 package org.beangle.serializer.json
 
-import org.beangle.commons.activation.MimeTypes
+import org.beangle.commons.activation.MediaTypes
 import org.beangle.serializer.text.AbstractSerializer
 import org.beangle.serializer.text.mapper.{ DefaultMapper, Mapper }
 import org.beangle.serializer.text.marshal.{ DefaultMarshallerRegistry, MarshallerRegistry }
 
-import javax.activation.MimeType
+import org.beangle.commons.activation.MediaType
 
 object JsonSerializer {
 
@@ -39,8 +39,8 @@ object JsonSerializer {
 class JsonSerializer(val driver: JsonDriver, val mapper: Mapper, val registry: MarshallerRegistry)
   extends AbstractSerializer {
 
-  override def mediaTypes: Seq[MimeType] = {
-    List(MimeTypes.ApplicationJson)
+  override def mediaTypes: Seq[MediaType] = {
+    List(MediaTypes.ApplicationJson)
   }
 
 }

@@ -20,12 +20,13 @@ package org.beangle.serializer.json
 
 import java.io.Writer
 
-import org.beangle.serializer.text.marshal.{ MarshallerRegistry, MarshallingContext }
+import org.beangle.serializer.text.marshal.{MarshallerRegistry, MarshallingContext}
 
 class DefaultJsonpWriter(writer: Writer, registry: MarshallerRegistry) extends DefaultJsonWriter(writer, registry) {
-  var callbackName = "callback"
+  var callbackName: String = "callback"
+
   override def start(context: MarshallingContext): Unit = {
-    val callback = context.params.get(callbackName).getOrElse("callback").asInstanceOf[String]
+    val callback = context.params.getOrElse(callbackName, "callback").asInstanceOf[String]
     writer.write(callback)
     writer.write('(')
   }

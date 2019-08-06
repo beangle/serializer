@@ -22,7 +22,7 @@ import org.beangle.cdi.bind.BindModule
 
 object DefaultModule extends BindModule {
 
-  protected override def binding() {
+  protected override def binding(): Unit = {
     bind(classOf[DefaultJsonDriver]).constructor("UTF-8")
     bind(classOf[DefaultJsonpDriver]).constructor("UTF-8")
 

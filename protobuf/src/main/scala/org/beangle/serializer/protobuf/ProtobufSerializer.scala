@@ -18,20 +18,18 @@
  */
 package org.beangle.serializer.protobuf
 
-import org.beangle.commons.activation.MimeTypes
-import org.beangle.commons.io.AbstractBinarySerializer
-import org.beangle.commons.lang.ClassLoaders
-
-import javax.activation.MimeType
+import org.beangle.commons.activation.{MediaType, MediaTypes}
+import org.beangle.commons.io.{AbstractBinarySerializer, ObjectSerializer}
+import org.beangle.commons.lang.reflect.Reflections
 
 class ProtobufSerializer extends AbstractBinarySerializer {
 
-  override def mediaTypes: Seq[MimeType] = {
-    MimeTypes.parse("application/x-protobuf")
+  override def mediaTypes: Seq[MediaType] = {
+    MediaTypes.parse("application/x-protobuf")
   }
 
   override def registerClass(clazz: Class[_]): Unit = {
-    register(clazz, ClassLoaders.newInstance(clazz.getName + "ProtobufSerializer"))
+    register(clazz, Reflections.newInstance[ObjectSerializer](clazz.getName + "ProtobufSerializer"))
   }
 
 }

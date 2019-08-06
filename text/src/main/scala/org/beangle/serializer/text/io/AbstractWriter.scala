@@ -18,8 +18,6 @@
  */
 package org.beangle.serializer.text.io
 
-import org.beangle.commons.collection.FastStack
-
 abstract class AbstractWriter extends StreamWriter {
 
   protected var pathStack = new PathStack

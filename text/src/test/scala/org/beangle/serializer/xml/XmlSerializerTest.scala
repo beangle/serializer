@@ -20,12 +20,13 @@ package org.beangle.serializer.xml
 
 import java.io.File
 import org.junit.runner.RunWith
-import org.scalatest.{ FunSpec, Matchers }
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatestplus.junit.JUnitRunner
 import org.beangle.commons.collection.page.SinglePage
 
 @RunWith(classOf[JUnitRunner])
-class XmlSerializerTest extends FunSpec with Matchers {
+class XmlSerializerTest extends AnyFunSpec with Matchers {
 
   describe("XmlSerializer") {
     it("serializer xml ") {

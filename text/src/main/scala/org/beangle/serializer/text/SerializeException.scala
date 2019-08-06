@@ -18,26 +18,26 @@
  */
 package org.beangle.serializer.text
 
-import java.util.TreeMap
+import java.{util => ju}
 
 object SerializeException {
-  final val SEPARATOR = "\n-------------------------------";
+  final val SEPARATOR = "\n-------------------------------"
 }
 
 class SerializeException(message: String, cause: Throwable = null) extends RuntimeException(message, cause) {
-  private val stuff = new TreeMap[String, String]();
+  private val stuff = new ju.TreeMap[String, String]()
 
-  def add(name: String, information: String) {
-    var key = name;
-    var i = 0;
+  def add(name: String, information: String): Unit = {
+    var key = name
+    var i = 0
     while (stuff.containsKey(key)) {
-      val value = stuff.get(key);
+      val value = stuff.get(key)
       if (information.equals(value))
-        return ;
+        return
       i = i + 1
-      key = name + "[" + i + "]";
+      key = name + "[" + i + "]"
     }
-    stuff.put(key, information);
+    stuff.put(key, information)
   }
 
 }

@@ -18,8 +18,6 @@
  */
 package org.beangle.serializer.text.marshal
 
-import org.beangle.serializer.text.mapper.Mapper
-
 trait MarshallerRegistry {
 
   def lookup[T](clazz: Class[T]): Marshaller[T]

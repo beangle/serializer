@@ -18,15 +18,14 @@
  */
 package org.beangle.serializer.protobuf
 
-import java.io.{ ByteArrayInputStream, ByteArrayOutputStream }
-
 import org.beangle.commons.logging.Logging
 import org.junit.runner.RunWith
-import org.scalatest.{ FunSpec, Matchers }
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class ProtobufSerializerTest extends FunSpec with Matchers with Logging {
+class ProtobufSerializerTest extends AnyFunSpec with Matchers with Logging {
   describe("ProtobufSerializer") {
     it("serializing") {
       val account = new Account("0001", "root")
@@ -40,7 +39,7 @@ class ProtobufSerializerTest extends FunSpec with Matchers with Logging {
       val data = serializer.asBytes(account)
       println("Account data has " + data.length + " bytes using protobuf serializer.")
       val newAccount = serializer.asObject(classOf[Account], data)
-      assert(newAccount.remoteToken == Some("OTHER_token"))
+      assert(newAccount.remoteToken.contains("OTHER_token"))
     }
   }
 }

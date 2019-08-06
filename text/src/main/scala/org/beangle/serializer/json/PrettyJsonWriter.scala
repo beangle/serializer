@@ -21,7 +21,7 @@ package org.beangle.serializer.json
 import java.io.Writer
 
 import org.beangle.serializer.text.marshal.MarshallerRegistry
-import org.beangle.serializer.text.marshal.Type.{ Collection, Object }
+import org.beangle.serializer.text.marshal.Type.{Collection, Object}
 
 class PrettyJsonWriter(writer: Writer, registry: MarshallerRegistry, lineIndenter: Array[Char], newLine: Array[Char])
   extends AbstractJsonWriter(writer, registry) {
@@ -32,7 +32,7 @@ class PrettyJsonWriter(writer: Writer, registry: MarshallerRegistry, lineIndente
 
   override def startNode(name: String, clazz: Class[_]): Unit = {
     val depth = pathStack.size
-    var inArray = (depth > 0 && registry.lookup(this.pathStack.peek().clazz).targetType == Collection)
+    val inArray = depth > 0 && registry.lookup(this.pathStack.peek().clazz).targetType == Collection
     pathStack.push(name, clazz)
     if (!pathStack.isFirstInLevel) {
       writer.write(',')
@@ -58,7 +58,7 @@ class PrettyJsonWriter(writer: Writer, registry: MarshallerRegistry, lineIndente
     writer.write(" \"@")
     writer.write(key)
     writer.write("\":")
-    writeText(value.toCharArray(), true)
+    writeText(value.toCharArray, quoted = true)
   }
 
   override def endNode(): Unit = {
@@ -75,11 +75,12 @@ class PrettyJsonWriter(writer: Writer, registry: MarshallerRegistry, lineIndente
     if (pathStack.size == 0) writer.flush()
   }
 
-  private def indentNewLine(depth: Int) {
+  private def indentNewLine(depth: Int): Unit = {
     writer.write(newLine)
-    (0 until depth) foreach (i => writer.write(lineIndenter))
+    (0 until depth) foreach (_ => writer.write(lineIndenter))
   }
-  private def indent(depth: Int) {
-    (0 until depth) foreach (i => writer.write(lineIndenter))
+
+  private def indent(depth: Int): Unit = {
+    (0 until depth) foreach (_ => writer.write(lineIndenter))
   }
 }

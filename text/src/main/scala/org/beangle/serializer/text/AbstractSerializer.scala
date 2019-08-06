@@ -18,18 +18,12 @@
  */
 package org.beangle.serializer.text
 
-import org.beangle.serializer.text.marshal.{ Marshaller, MarshallerRegistry }
-import org.beangle.serializer.text.io.StreamWriter
-import org.beangle.serializer.text.mapper.Mapper
-import org.beangle.serializer.text.marshal.{ Marshaller, MarshallingContext }
-import org.beangle.commons.conversion.ConverterRegistry
-import org.beangle.serializer.text.io.StreamDriver
-import java.io.StringWriter
-import java.io.Writer
-import java.io.OutputStream
-import scala.collection.immutable.TreeMap
-import org.beangle.serializer.text.marshal.Id
+import java.io.{OutputStream, StringWriter, Writer}
+
 import org.beangle.commons.lang.Strings
+import org.beangle.serializer.text.io.{StreamDriver, StreamWriter}
+import org.beangle.serializer.text.mapper.Mapper
+import org.beangle.serializer.text.marshal.{Marshaller, MarshallerRegistry, MarshallingContext}
 
 abstract class AbstractSerializer extends StreamSerializer {
 
@@ -57,16 +51,16 @@ abstract class AbstractSerializer extends StreamSerializer {
   def serialize(obj: Any): String = {
     val writer = new StringWriter()
     serialize(obj, writer, Map.empty[String, Any])
-    writer.toString()
+    writer.toString
   }
 
   def serialize(obj: Any, params: Map[String, Any]): String = {
     val writer = new StringWriter()
     serialize(obj, writer, params)
-    writer.toString()
+    writer.toString
   }
 
-  def serialize(obj: Any, out: Writer, params: Map[String, Any]) {
+  def serialize(obj: Any, out: Writer, params: Map[String, Any]): Unit = {
     val writer = driver.createWriter(out, params)
     try {
       serialize(obj, writer, params)
@@ -81,7 +75,7 @@ abstract class AbstractSerializer extends StreamSerializer {
     if (item == null) {
       writer.startNode(mapper.serializedClass(classOf[Null]), classOf[Null])
     } else {
-      writer.startNode(mapper.serializedClass(item.getClass()), item.getClass())
+      writer.startNode(mapper.serializedClass(item.getClass), item.getClass)
       context.marshal(item, null)
     }
     writer.endNode()
@@ -96,9 +90,9 @@ abstract class AbstractSerializer extends StreamSerializer {
     } else {
       val objectItem = item.asInstanceOf[AnyRef]
       if (context.currents.contains(objectItem)) {
-        val key = Strings.unCamel(item.getClass().getSimpleName) + "_" + System.identityHashCode(item)
+        val key = Strings.unCamel(item.getClass.getSimpleName) + "_" + System.identityHashCode(item)
         val attributeName = mapper.aliasForSystemAttribute("id")
-        if (attributeName != null) context.writer.addAttribute(attributeName, key.toString())
+        if (attributeName != null) context.writer.addAttribute(attributeName, key.toString)
       } else {
         context.currents += objectItem
         marshaller.marshal(item, writer, context)

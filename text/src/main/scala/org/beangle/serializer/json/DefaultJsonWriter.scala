@@ -19,14 +19,15 @@
 package org.beangle.serializer.json
 
 import java.io.Writer
-import org.beangle.serializer.text.marshal.Type.{ Collection, Object }
+
 import org.beangle.serializer.text.marshal.MarshallerRegistry
+import org.beangle.serializer.text.marshal.Type.{Collection, Object}
 
 class DefaultJsonWriter(writer: Writer, registry: MarshallerRegistry) extends AbstractJsonWriter(writer, registry) {
 
   override def startNode(name: String, clazz: Class[_]): Unit = {
     val depth = pathStack.size
-    var inArray = (depth > 0 && registry.lookup(this.pathStack.peek().clazz).targetType == Collection)
+    val inArray = depth > 0 && registry.lookup(this.pathStack.peek().clazz).targetType == Collection
     pathStack.push(name, clazz)
     if (!pathStack.isFirstInLevel) {
       writer.write(',')
@@ -47,13 +48,11 @@ class DefaultJsonWriter(writer: Writer, registry: MarshallerRegistry) extends Ab
     writer.write(" \"")
     writer.write(key)
     writer.write("\":")
-    writeText(value.toCharArray(), true)
+    writeText(value.toCharArray, quoted = true)
   }
 
   override def endNode(): Unit = {
     val clazz = pathStack.pop().clazz
-    val depth = pathStack.size
-
     registry.lookup(clazz).targetType match {
       case Collection => writer.write(']')
       case Object => writer.write('}')

@@ -20,11 +20,12 @@ package org.beangle.serializer.json
 
 import java.io.File
 import org.junit.runner.RunWith
-import org.scalatest.{ FunSpec, Matchers }
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.Matchers
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class JsonSerializerTest extends FunSpec with Matchers {
+class JsonSerializerTest extends AnyFunSpec with Matchers {
 
   describe("JsonSerializer") {
     it("serializer json ") {

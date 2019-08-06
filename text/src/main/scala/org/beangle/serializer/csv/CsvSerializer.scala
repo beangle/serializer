@@ -18,15 +18,14 @@
  */
 package org.beangle.serializer.csv
 
-import org.beangle.commons.activation.MimeTypes
+import org.beangle.commons.activation.{MediaType, MediaTypes}
 import org.beangle.commons.collection.page.Page
 import org.beangle.commons.lang.reflect.BeanInfos
 import org.beangle.serializer.text.AbstractSerializer
 import org.beangle.serializer.text.io.StreamWriter
-import org.beangle.serializer.text.mapper.{ DefaultMapper, Mapper }
-import org.beangle.serializer.text.marshal.{ DefaultMarshallerRegistry, MarshallerRegistry, MarshallingContext }
+import org.beangle.serializer.text.mapper.{DefaultMapper, Mapper}
+import org.beangle.serializer.text.marshal.{DefaultMarshallerRegistry, MarshallerRegistry, MarshallingContext}
 
-import javax.activation.MimeType
 
 object CsvSerializer {
   def apply(): CsvSerializer = {
@@ -37,17 +36,17 @@ object CsvSerializer {
 }
 
 final class CsvSerializer(val driver: CsvDriver, val mapper: Mapper, val registry: MarshallerRegistry)
-    extends AbstractSerializer {
+  extends AbstractSerializer {
 
-  override def mediaTypes: Seq[MimeType] = {
-    List(MimeTypes.TextCsv)
+  override def mediaTypes: Seq[MediaType] = {
+    List(MediaTypes.TextCsv)
   }
 
   override def serialize(item: Any, writer: StreamWriter, params: Map[String, Any]): Unit = {
     val datas = item match {
-      case null          => null
+      case null => null
       case page: Page[_] => page.items
-      case _             => item
+      case _ => item
     }
 
     val context = new MarshallingContext(this, writer, registry, params)
@@ -55,7 +54,7 @@ final class CsvSerializer(val driver: CsvDriver, val mapper: Mapper, val registr
     if (datas == null) {
       writer.startNode(mapper.serializedClass(classOf[Null]), classOf[Null])
     } else {
-      writer.startNode(mapper.serializedClass(datas.getClass()), datas.getClass())
+      writer.startNode(mapper.serializedClass(datas.getClass), datas.getClass)
       context.marshal(datas, null)
     }
     writer.endNode()
@@ -63,9 +62,9 @@ final class CsvSerializer(val driver: CsvDriver, val mapper: Mapper, val registr
   }
 
   override def marshalNull(obj: Any, property: String, context: MarshallingContext): Unit = {
-    val size = context.getProperties(BeanInfos.get(obj.getClass).properties.get(property).get.clazz).size
+    val size = context.getProperties(BeanInfos.get(obj.getClass).properties(property).clazz).size
     if (size > 0) {
-      (0 until size) foreach (i => context.writer.setValue(""))
+      (0 until size) foreach (_ => context.writer.setValue(""))
     } else {
       context.writer.setValue("")
     }

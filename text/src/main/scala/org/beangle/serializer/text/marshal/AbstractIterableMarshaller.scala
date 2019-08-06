@@ -25,13 +25,13 @@ import Type.Type
 
 abstract class AbstractIterableMarshaller[T <: Iterable[_]](val mapper: Mapper) extends Marshaller[T] {
 
-  protected def writeItem(item: Object, writer: StreamWriter, context: MarshallingContext) {
+  protected def writeItem(item: Object, writer: StreamWriter, context: MarshallingContext): Unit = {
     val realitem = extractOption(item)
     if (realitem == null) {
       writer.startNode(mapper.serializedClass(classOf[Null]), classOf[Null])
     } else {
-      val name = mapper.serializedClass(realitem.getClass())
-      writer.startNode(name, realitem.getClass())
+      val name = mapper.serializedClass(realitem.getClass)
+      writer.startNode(name, realitem.getClass)
       context.marshal(realitem)
     }
     writer.endNode()
@@ -44,13 +44,13 @@ abstract class AbstractIterableMarshaller[T <: Iterable[_]](val mapper: Mapper) 
 
 abstract class AbstractCollectionMarshaller[T](val mapper: Mapper) extends Marshaller[T] {
 
-  protected def writeItem(item: Object, writer: StreamWriter, context: MarshallingContext) {
+  protected def writeItem(item: Object, writer: StreamWriter, context: MarshallingContext): Unit = {
     val realitem = extractOption(item)
     if (realitem == null) {
       writer.startNode(mapper.serializedClass(classOf[Null]), classOf[Null])
     } else {
-      val name = mapper.serializedClass(realitem.getClass())
-      writer.startNode(name, realitem.getClass())
+      val name = mapper.serializedClass(realitem.getClass)
+      writer.startNode(name, realitem.getClass)
       context.marshal(realitem)
     }
     writer.endNode()
