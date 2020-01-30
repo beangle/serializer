@@ -24,7 +24,7 @@ import java.util.Date
 import org.beangle.serializer.text.AbstractSerializer
 import org.beangle.serializer.text.marshal.MarshallingContext
 import org.junit.runner.RunWith
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatestplus.junit.JUnitRunner
 
