@@ -24,7 +24,7 @@ import org.beangle.commons.collection.page.SinglePage
 import org.beangle.serializer.text.Skill
 import org.beangle.serializer.text.mapper.DefaultMapper
 import org.junit.runner.RunWith
-import org.scalatest.matchers.should.Matchers.should.Matchers
+import org.scalatest.matchers.should.Matchers
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatestplus.junit.JUnitRunner
 

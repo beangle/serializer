@@ -26,7 +26,7 @@ class AccountProtobufSerializer extends ObjectSerializer {
 
   def serialize(data: Any, os: OutputStream, params: Map[String, Any]): Unit = {
     val account = data.asInstanceOf[Account]
-    val builder = Protobuf.Account.newBuilder()
+    val builder = AccountProtobuf.Account.newBuilder()
     builder.setName(account.name)
     builder.setDescription(account.description)
     builder.setStatus(account.status)
@@ -44,7 +44,7 @@ class AccountProtobufSerializer extends ObjectSerializer {
   }
 
   def deserialize(is: InputStream, params: Map[String, Any]): Any = {
-    val pa = Protobuf.Account.parseFrom(is)
+    val pa = AccountProtobuf.Account.parseFrom(is)
     val account = new Account(pa.getName, pa.getDescription)
     account.status = pa.getStatus
     account.authorities = pa.getAuthorities
