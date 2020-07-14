@@ -38,7 +38,7 @@
   <properties>
     <commons.version>5.1.17</commons.version>
     <cdi.version>0.2.2</cdi.version>
-    <fst.version>3.0.1</fst.version>
+    <fst.version>2.57</fst.version>
     <protobuf.version>3.12.2</protobuf.version>
   </properties>
 
