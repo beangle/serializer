@@ -69,7 +69,7 @@ abstract class ReferenceByXPathSerializer(val absolutePath: Boolean, val singleN
   protected override def createReference(currentPath: Path, existedKey: Object, context: MarshallingContext): String = {
     val existingPath = existedKey.asInstanceOf[Path]
     val referencePath = if (absolutePath) existingPath else currentPath.relativeTo(existingPath)
-    if (singleNode) referencePath.explicit() else referencePath.toString
+    if (singleNode) referencePath.explicit else referencePath.toString
   }
 
   protected override def fireReference(currentPath: Path, item: Any, context: MarshallingContext): AnyRef = {
