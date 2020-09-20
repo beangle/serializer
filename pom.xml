@@ -8,7 +8,7 @@
   <groupId>org.beangle.serializer</groupId>
   <artifactId>beangle-serializer-parent_2.13</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.15</version>
+  <version>0.0.16-SNAPSHOT</version>
   <name>Beangle Serializer Parent</name>
 
   <modules>
