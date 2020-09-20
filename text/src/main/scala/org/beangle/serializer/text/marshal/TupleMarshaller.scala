@@ -28,7 +28,7 @@ class TupleMarshaller(mapper: Mapper) extends Marshaller[Product] {
     var i = 0
     writer.addAttribute("class", "tuple")
     while (iter.hasNext) {
-      val item = iter.next
+      val item = iter.next()
       i = i + 1
       writeItem(item.asInstanceOf[AnyRef], writer, context, i)
     }

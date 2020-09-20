@@ -26,7 +26,7 @@ import org.beangle.serializer.text.marshal.Type.{Collection, Object}
 class PrettyJsonWriter(writer: Writer, registry: MarshallerRegistry, lineIndenter: Array[Char], newLine: Array[Char])
   extends AbstractJsonWriter(writer, registry) {
 
-  def this(writer: Writer, registry: MarshallerRegistry) {
+  def this(writer: Writer, registry: MarshallerRegistry) = {
     this(writer, registry, Array(' ', ' '), Array('\n'))
   }
 

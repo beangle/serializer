@@ -38,7 +38,7 @@ class PrettyXmlWriter(writer: Writer, lineIndenter: Array[Char], newLine: Array[
 
   import PrettyXmlWriter._
 
-  def this(writer: Writer) {
+  def this(writer: Writer) = {
     this(writer, Array(' ', ' '), Array('\n'))
   }
 

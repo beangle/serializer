@@ -39,7 +39,7 @@ final class Account extends Externalizable with Serializable {
 
   var details: Map[String, String] = Map.empty
 
-  def this(name: String, description: String) {
+  def this(name: String, description: String) = {
     this()
     this.name = name
     this.description = description

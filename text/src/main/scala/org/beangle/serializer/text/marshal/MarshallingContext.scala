@@ -101,7 +101,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     val classQueue = new mutable.Queue[Class[_]]
     classQueue += targetType
     while (classQueue.nonEmpty) {
-      val currentClass = classQueue.dequeue
+      val currentClass = classQueue.dequeue()
       val props = propertyMap.get(currentClass).orNull
       if (props != null) return props
       val superClass = currentClass.getSuperclass
@@ -110,7 +110,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     }
     val iter = interfaces.iterator
     while (iter.hasNext) {
-      val interfaceType = iter.next
+      val interfaceType = iter.next()
       val props = propertyMap.get(interfaceType).orNull
       if (props != null) return props
     }

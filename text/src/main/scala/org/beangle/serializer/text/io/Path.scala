@@ -28,9 +28,9 @@ class Path(val chunks: Array[String]) {
     Strings.join(chunks, "/")
   }
 
-  def explicit(): String = {
+  def explicit: String = {
     val buffer = new StringBuffer()
-    (0 until chunks.length) foreach { i =>
+    chunks.indices foreach { i =>
       if (i > 0) buffer.append('/')
       val chunk = chunks(i)
       buffer.append(chunk)
@@ -42,7 +42,7 @@ class Path(val chunks: Array[String]) {
         }
       }
     }
-    buffer.toString()
+    buffer.toString
   }
 
   override def equals(o: Any): Boolean = {
