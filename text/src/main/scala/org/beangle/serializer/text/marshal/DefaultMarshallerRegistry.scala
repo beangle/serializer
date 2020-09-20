@@ -85,7 +85,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     val classQueue = new mutable.Queue[Class[_]]
     classQueue += sourceType
     while (classQueue.nonEmpty) {
-      val currentClass = classQueue.dequeue
+      val currentClass = classQueue.dequeue()
       val converter = searchSupport(sourceType, converterMap.get(currentClass))
       if (converter != null) return converter
       val superClass = currentClass.getSuperclass
@@ -94,7 +94,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     }
     val iter = interfaces.iterator
     while (iter.hasNext) {
-      val interface = iter.next
+      val interface = iter.next()
       val converter = searchSupport(sourceType, converterMap.get(interface))
       if (converter != null) return converter
     }
