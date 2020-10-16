@@ -19,16 +19,30 @@
 package org.beangle.serializer.json
 
 import java.io.Writer
-import org.beangle.serializer.text.marshal.MarshallerRegistry
-import org.beangle.serializer.text.marshal.Type.{ Boolean, Number }
+
 import org.beangle.serializer.text.io.AbstractWriter
-import org.beangle.serializer.text.marshal.MarshallingContext
+import org.beangle.serializer.text.marshal.Type.{Boolean, Number}
+import org.beangle.serializer.text.marshal.{MarshallerRegistry, MarshallingContext}
 
 abstract class AbstractJsonWriter(val writer: Writer, val registry: MarshallerRegistry) extends AbstractWriter {
 
+  private val quotedClazzes: Set[Class[_]] = Set(classOf[String], classOf[Long], classOf[java.lang.Long],
+    classOf[java.math.BigInteger], classOf[java.math.BigDecimal],
+    classOf[scala.math.BigInt], classOf[scala.math.BigDecimal]
+  )
+
   override def setValue(text: String): Unit = {
-    val targetType = registry.lookup(this.pathStack.peek().clazz).targetType
-    writeText(text.toCharArray, targetType != Boolean && targetType != Number)
+    val peekClz = this.pathStack.peek().clazz
+    writeText(text.toCharArray, needQuoted(peekClz))
+  }
+
+  private def needQuoted(clazz: Class[_]): Boolean = {
+    if (quotedClazzes.contains(clazz)) {
+      true
+    } else {
+      val targetType = registry.lookup(clazz).targetType
+      targetType != Boolean && targetType != Number
+    }
   }
 
   protected def writeText(text: Array[Char], quoted: Boolean): Unit = {
@@ -69,7 +83,7 @@ abstract class AbstractJsonWriter(val writer: Writer, val registry: MarshallerRe
 
   }
 
-  override  def end(context: MarshallingContext): Unit = {
+  override def end(context: MarshallingContext): Unit = {
 
   }
 }
