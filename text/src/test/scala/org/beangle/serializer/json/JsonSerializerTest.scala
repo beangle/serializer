@@ -47,5 +47,9 @@ class JsonSerializerTest extends AnyFunSpec with Matchers {
       //println(jsonp.serialize(Array("a", "b")))
       //println(jsonp.serialize(new Member))
     }
+    it("seriailizer Long"){
+      val json = JsonSerializer()
+      json.serialize(Long.MaxValue) should equal("\"9223372036854775807\"")
+    }
   }
 }
