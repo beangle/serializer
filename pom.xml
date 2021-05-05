@@ -8,7 +8,7 @@
   <groupId>org.beangle.serializer</groupId>
   <artifactId>beangle-serializer-parent_2.13</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.19-SNAPSHOT</version>
+  <version>0.0.19</version>
   <name>Beangle Serializer Parent</name>
 
   <modules>
@@ -36,8 +36,8 @@
   </scm>
 
   <properties>
-    <commons.version>5.2.2</commons.version>
-    <cdi.version>0.2.6</cdi.version>
+    <commons.version>5.2.3</commons.version>
+    <cdi.version>0.3.0</cdi.version>
     <fst.version>2.57</fst.version>
     <protobuf.version>3.15.8</protobuf.version>
   </properties>
