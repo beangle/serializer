@@ -1,21 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkits.
- *
- * Copyright © 2005, The Beangle Software.
+ * Copyright (C) 2005, The Beangle Software.
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.beangle.serializer.csv
 
 import java.math.BigInteger
@@ -27,7 +26,7 @@ class Person(var code: String, var name: String) {
   var skills = List(new Skill("Play Basketball Best"), new Skill("Play football"))
   var skillsArray = Array(new Skill("Play Basketball Best"), new Skill("Play football"))
   val bestSkill = Some(skills.head)
-  val badestSkill = None
+  val badestSkill :Option[Skill]=None
   var accountMoney1: BigInt = new BigInt(new BigInteger("1234567890"))
   var accountMoney2: BigDecimal = new java.math.BigDecimal("12243434.23")
   var birthday = new ju.Date()
@@ -61,4 +60,4 @@ class Skill(val name: String) {
   def excellent: Boolean = name.contains("Best")
 }
 
-case class Address(name: String, street: String, city: String) extends Addressable
+ class Address(val name: String, val street: String, val city: String) extends Addressable
