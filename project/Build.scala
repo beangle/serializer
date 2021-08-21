@@ -29,7 +29,7 @@ object Dependencies {
   val logbackVer = "1.2.4"
   val scalatestVer = "3.2.9"
   val commonsVer = "5.2.5"
-  val cdiVer = "0.3.1"
+  val cdiVer = "0.3.2"
 
   val fstVer = "2.57"
   val protobufVer = "3.15.8"
