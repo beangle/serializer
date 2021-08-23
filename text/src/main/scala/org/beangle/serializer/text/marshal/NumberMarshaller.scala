@@ -19,8 +19,6 @@ package org.beangle.serializer.text.marshal
 
 import org.beangle.serializer.text.io.StreamWriter
 
-import Type.Type
-
 class NumberMarshaller extends Marshaller[Number] {
 
   def marshal(source: Number, writer: StreamWriter, context: MarshallingContext): Unit = {

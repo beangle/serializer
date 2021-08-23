@@ -21,8 +21,6 @@ import java.{ lang => jl }
 
 import org.beangle.serializer.text.io.StreamWriter
 
-import Type.Type
-
 class BooleanMarshaller extends Marshaller[jl.Boolean] {
 
   override def marshal(source: jl.Boolean, writer: StreamWriter, context: MarshallingContext): Unit = {

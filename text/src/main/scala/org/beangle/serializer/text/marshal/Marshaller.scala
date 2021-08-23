@@ -18,7 +18,7 @@
 package org.beangle.serializer.text.marshal
 
 import org.beangle.serializer.text.io.StreamWriter
-import org.beangle.serializer.text.marshal.Type.Type
+import org.beangle.serializer.text.marshal.Type
 
 /**
   * 具体某一类型的序列化

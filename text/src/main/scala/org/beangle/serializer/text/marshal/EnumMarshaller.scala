@@ -18,14 +18,14 @@
 package org.beangle.serializer.text.marshal
 
 import org.beangle.serializer.text.io.StreamWriter
-import org.beangle.serializer.text.marshal.Type.Type
+import org.beangle.serializer.text.marshal.Type
 
-class EnumMarshaller extends Marshaller[Enumeration#Value] {
+class EnumMarshaller extends Marshaller[scala.reflect.Enum] {
 
   var ordinal = false
 
-  def marshal(source: Enumeration#Value, writer: StreamWriter, context: MarshallingContext): Unit = {
-    if (ordinal) writer.setValue(String.valueOf(source.id))
+  def marshal(source: scala.reflect.Enum, writer: StreamWriter, context: MarshallingContext): Unit = {
+    if (ordinal) writer.setValue(String.valueOf(source.ordinal))
     else writer.setValue(source.toString)
   }
 

@@ -22,7 +22,7 @@ import org.beangle.commons.lang.Primitives
 import org.beangle.commons.lang.reflect.BeanInfos
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
-import org.beangle.serializer.text.marshal.Type.Type
+import org.beangle.serializer.text.marshal.Type
 
 class PageMarshaller(val mapper: Mapper) extends Marshaller[Page[Object]] {
 

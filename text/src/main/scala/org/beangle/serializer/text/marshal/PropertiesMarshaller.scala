@@ -22,7 +22,7 @@ import java.{util => ju}
 import org.beangle.commons.collection.Properties
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
-import org.beangle.serializer.text.marshal.Type.Type
+import org.beangle.serializer.text.marshal.Type
 
 class PropertiesMarshaller(val mapper: Mapper) extends Marshaller[ju.Properties] {
 

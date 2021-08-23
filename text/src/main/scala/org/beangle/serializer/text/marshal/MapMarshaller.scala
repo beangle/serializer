@@ -23,8 +23,6 @@ import org.beangle.commons.collection.Properties
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
 
-import Type.Type
-
 abstract class AbstractMapMarshaller[T] extends Marshaller[T] {
   protected def writeItem(key: Boolean, item: Object, writer: StreamWriter, context: MarshallingContext): Unit = {
     val realitem = extractOption(item)
