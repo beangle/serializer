@@ -60,4 +60,4 @@ class Skill(val name: String) {
   def excellent: Boolean = name.contains("Best")
 }
 
- class Address(val name: String, val street: String, val city: String) extends Addressable
+case class Address(name: String, street: String,city: String) extends Addressable

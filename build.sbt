@@ -1,6 +1,5 @@
-import Dependencies._
-import BuildSettings._
-import sbt.url
+import org.beangle.parent.Dependencies._
+import org.beangle.parent.Settings._
 
 ThisBuild / organization := "org.beangle.serializer"
 ThisBuild / version := "0.0.20"
@@ -25,29 +24,28 @@ ThisBuild / description := "The Beangle Data Library"
 ThisBuild / homepage := Some(url("https://beangle.github.io/serializer/index.html"))
 ThisBuild / resolvers += Resolver.mavenLocal
 
+val beangle_commons_core = "org.beangle.commons" %% "beangle-commons-core" % "5.2.5"
+val beangle_commons_csv = "org.beangle.commons" %% "beangle-commons-csv" % "5.2.5"
+val beangle_cdi_api = "org.beangle.cdi" %% "beangle-cdi-api" %  "0.3.2"
+
+val commonDeps = Seq(logback_classic, logback_core, scalatest, beangle_commons_core, beangle_cdi_api)
+
 lazy val root = (project in file("."))
   .settings()
-  .aggregate(text,fst,protobuf)
+  .aggregate(text,p_protobuf)
 
 lazy val text = (project in file("text"))
   .settings(
     name := "beangle-serializer-text",
-    commonSettings,
-    libraryDependencies ++= (commonDeps ++ Seq(Dependencies.commonsCsv))
+    common,
+    libraryDependencies ++= (commonDeps ++ Seq(beangle_commons_csv))
   )
 
-lazy val fst = (project in file("fst"))
-  .settings(
-    name := "beangle-serializer-fst",
-    commonSettings,
-    libraryDependencies ++= (commonDeps ++ Seq(Dependencies.fst))
-  )
-
-lazy val protobuf = (project in file("protobuf"))
+lazy val p_protobuf = (project in file("protobuf"))
   .settings(
     name := "beangle-serializer-protobuf",
-    commonSettings,
-    libraryDependencies ++= (commonDeps ++ Seq(Dependencies.protobuf))
+    common,
+    libraryDependencies ++= (commonDeps ++ Seq(protobuf))
   )
 
 publish / skip := true
