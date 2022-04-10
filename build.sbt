@@ -2,7 +2,7 @@ import org.beangle.parent.Dependencies._
 import org.beangle.parent.Settings._
 
 ThisBuild / organization := "org.beangle.serializer"
-ThisBuild / version := "0.0.22"
+ThisBuild / version := "0.0.23"
 
 ThisBuild / scmInfo := Some(
   ScmInfo(
@@ -20,13 +20,13 @@ ThisBuild / developers := List(
   )
 )
 
-ThisBuild / description := "The Beangle Data Library"
+ThisBuild / description := "The Beangle Serializer Library"
 ThisBuild / homepage := Some(url("https://beangle.github.io/serializer/index.html"))
 ThisBuild / resolvers += Resolver.mavenLocal
 
-val beangle_commons_core = "org.beangle.commons" %% "beangle-commons-core" % "5.2.9"
-val beangle_commons_csv = "org.beangle.commons" %% "beangle-commons-csv" % "5.2.9"
-val beangle_cdi_api = "org.beangle.cdi" %% "beangle-cdi-api" %  "0.3.4"
+val beangle_commons_core = "org.beangle.commons" %% "beangle-commons-core" % "5.2.13"
+val beangle_commons_csv = "org.beangle.commons" %% "beangle-commons-csv" % "5.2.13"
+val beangle_cdi_api = "org.beangle.cdi" %% "beangle-cdi-api" %  "0.3.5"
 
 val commonDeps = Seq(logback_classic, logback_core, scalatest, beangle_commons_core, beangle_cdi_api)
 

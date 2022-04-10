@@ -17,21 +17,22 @@
 
 package org.beangle.serializer.csv
 
+import org.beangle.commons.lang.SystemInfo
 import org.beangle.commons.lang.reflect.BeanInfos
+import org.beangle.serializer.text.AbstractSerializer
+import org.beangle.serializer.text.marshal.MarshallingContext
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 import java.io.FileOutputStream
 import java.util.Date
-import org.beangle.serializer.text.AbstractSerializer
-import org.beangle.serializer.text.marshal.MarshallingContext
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.funspec.AnyFunSpec
 
 class DefaultCsvWriterTest extends AnyFunSpec with Matchers {
 
   describe("DefaultCsvWriter") {
     it("getAttributes") {
       val serializer = CsvSerializer().asInstanceOf[AbstractSerializer]
-      val os = new FileOutputStream("/tmp/a.csv")
+      val os = new FileOutputStream(SystemInfo.tmpDir + "/a.csv")
       BeanInfos.of(classOf[Person])
       val bia = BeanInfos.of(classOf[Address])
       val params = Map("properties" -> List(
@@ -47,7 +48,7 @@ class DefaultCsvWriterTest extends AnyFunSpec with Matchers {
       assert(context.getProperties(classOf[Address]) != null)
       assert(context.getProperties(classOf[Address]).size == 3)
 
-      var csvProperties = writer.getProperties(context)
+      val csvProperties = writer.getProperties(context)
       assert(csvProperties.length == 8)
     }
   }
