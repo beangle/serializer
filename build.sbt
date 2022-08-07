@@ -25,7 +25,7 @@ ThisBuild / homepage := Some(url("https://beangle.github.io/serializer/index.htm
 ThisBuild / resolvers += Resolver.mavenLocal
 
 val beangle_commons_core = "org.beangle.commons" %% "beangle-commons-core" % "5.3.0"
-val beangle_commons_csv = "org.beangle.commons" %% "beangle-commons-csv" % "5.3.0"
+val beangle_commons_csv = "org.beangle.data" %% "beangle-data-csv" % "5.4.6"
 val beangle_cdi_api = "org.beangle.cdi" %% "beangle-cdi-api" %  "0.3.7"
 
 val commonDeps = Seq(logback_classic, logback_core, scalatest, beangle_commons_core, beangle_cdi_api)
