@@ -2,7 +2,7 @@ import org.beangle.parent.Dependencies.*
 import org.beangle.parent.Settings.*
 
 ThisBuild / organization := "org.beangle.serializer"
-ThisBuild / version := "0.1.9-SNAPSHOT"
+ThisBuild / version := "0.1.9"
 
 ThisBuild / scmInfo := Some(
   ScmInfo(
@@ -13,38 +13,24 @@ ThisBuild / scmInfo := Some(
 
 ThisBuild / developers := List(
   Developer(
-    id    = "chaostone",
-    name  = "Tihua Duan",
+    id = "chaostone",
+    name = "Tihua Duan",
     email = "duantihua@gmail.com",
-    url   = url("http://github.com/duantihua")
+    url = url("http://github.com/duantihua")
   )
 )
 
 ThisBuild / description := "The Beangle Serializer Library"
 ThisBuild / homepage := Some(url("https://beangle.github.io/serializer/index.html"))
 
-val beangle_commons_core = "org.beangle.commons" %% "beangle-commons-core" % "5.6.10"
-val beangle_commons_csv = "org.beangle.data" %% "beangle-data-csv" % "5.8.0"
-val beangle_cdi_api = "org.beangle.cdi" %% "beangle-cdi-api" %  "0.6.2"
-
-val commonDeps = Seq(logback_classic, logback_core, scalatest, beangle_commons_core, beangle_cdi_api)
+val beangle_commons = "org.beangle.commons" % "beangle-commons" % "5.6.15"
+val beangle_cdi = "org.beangle.cdi" % "beangle-cdi" % "0.6.5"
 
 lazy val root = (project in file("."))
-  .settings()
-  .aggregate(text,p_protobuf)
-
-lazy val text = (project in file("text"))
   .settings(
-    name := "beangle-serializer-text",
+    name := "beangle-serializer",
     common,
-    libraryDependencies ++= (commonDeps ++ Seq(beangle_commons_csv))
+    libraryDependencies ++= Seq(logback_classic % "test", scalatest),
+    libraryDependencies ++= Seq(beangle_commons, beangle_cdi),
+    libraryDependencies ++= Seq(protobuf % "optional"),
   )
-
-lazy val p_protobuf = (project in file("protobuf"))
-  .settings(
-    name := "beangle-serializer-protobuf",
-    common,
-    libraryDependencies ++= (commonDeps ++ Seq(protobuf))
-  )
-
-publish / skip := true

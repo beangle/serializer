@@ -26,7 +26,7 @@ import org.beangle.serializer.text.marshal.MarshallingContext
 import scala.collection.mutable.ListBuffer
 
 class DefaultCsvWriter(out: Writer) extends AbstractWriter {
-  val innerWriter = new org.beangle.data.csv.CsvWriter(out)
+  val innerWriter = new org.beangle.commons.csv.CsvWriter(out)
 
   val buf = new collection.mutable.ListBuffer[String]
 
