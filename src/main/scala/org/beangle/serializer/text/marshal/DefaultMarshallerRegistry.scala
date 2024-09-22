@@ -33,7 +33,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     */
   private val converterMap = new mutable.HashMap[Class[_], Set[Marshaller[_]]]
 
-  registerBuildin()
+  registerBuiltin()
 
   override def lookup[T](clazz: Class[T]): Marshaller[T] = {
     var converter = cache.get(clazz)
@@ -57,7 +57,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     }
   }
 
-  private def registerBuildin(): Unit = {
+  private def registerBuiltin(): Unit = {
     register(new CollectionMarshaller(mapper))
     register(new IterableMarshaller(mapper))
     register(new MapMarshaller(mapper))
