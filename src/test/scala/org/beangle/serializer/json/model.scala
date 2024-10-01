@@ -18,9 +18,9 @@
 package org.beangle.serializer.json
 
 import java.math.BigInteger
-import java.{ util => ju }
-import java.net.URL
+import java.util as ju
 import org.beangle.commons.collection.Properties
+import org.beangle.commons.net.Networks
 
 class Person(var code: String, var name: String) {
   var address = Address("minzu", "500", "jiading")
@@ -36,7 +36,7 @@ class Person(var code: String, var name: String) {
   var updatedAt = ju.Calendar.getInstance()
   var createdAt = new java.sql.Timestamp(System.currentTimeMillis)
   val locale = ju.Locale.SIMPLIFIED_CHINESE
-  val homepage = new URL("http://www.some.com/info")
+  val homepage = Networks.url("http://www.some.com/info")
   var birthAt = java.sql.Time.valueOf("23:23:23")
   var remark = """
                 A very famous Basketball Player, and

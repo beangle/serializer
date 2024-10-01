@@ -17,9 +17,11 @@
 
 package org.beangle.serializer.xml
 
+import org.beangle.commons.net.Networks
+
 import java.math.BigInteger
-import java.{ util => ju }
-import java.net.URL
+import java.util as ju
+
 class Person(var code: String, var name: String) {
   var address = Address("minzu", "500", "jiading")
   var mobile: String = _
@@ -34,7 +36,7 @@ class Person(var code: String, var name: String) {
   var updatedAt = ju.Calendar.getInstance()
   var createdAt = new java.sql.Timestamp(System.currentTimeMillis)
   val locale = ju.Locale.SIMPLIFIED_CHINESE
-  val homepage = new URL("http://www.some.com/info")
+  val homepage = Networks.url("http://www.some.com/info")
   var birthAt = java.sql.Time.valueOf("23:23:23")
   var remark = """
                 A very famous Basketball Player, and
