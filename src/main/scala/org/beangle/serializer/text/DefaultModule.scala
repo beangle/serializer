@@ -17,7 +17,7 @@
 
 package org.beangle.serializer.text
 
-import org.beangle.cdi.bind.BindModule
+import org.beangle.commons.cdi.BindModule
 import org.beangle.serializer.text.mapper.DefaultMapper
 import org.beangle.serializer.text.marshal.DefaultMarshallerRegistry
 

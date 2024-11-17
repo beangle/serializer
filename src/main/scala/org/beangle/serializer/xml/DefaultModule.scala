@@ -17,7 +17,7 @@
 
 package org.beangle.serializer.xml
 
-import org.beangle.cdi.bind.BindModule
+import org.beangle.commons.cdi.BindModule
 
 object DefaultModule extends BindModule {
 
