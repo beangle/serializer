@@ -34,7 +34,7 @@ class JsonSerializerTest extends AnyFunSpec with Matchers {
       //println(json.serialize(Array("a", "b")))
       //println(json.serialize(new Member))
     }
-    it("serializer jsonp ") {
+    it("serializer jsonp") {
       val jsonp = JsonpSerializer()
       jsonp.alias("person", classOf[Person])
       jsonp.alias("address", classOf[Address])

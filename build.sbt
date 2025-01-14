@@ -23,7 +23,7 @@ ThisBuild / developers := List(
 ThisBuild / description := "The Beangle Serializer Library"
 ThisBuild / homepage := Some(url("https://beangle.github.io/serializer/index.html"))
 
-val beangle_commons = "org.beangle.commons" % "beangle-commons" % "5.6.22"
+val beangle_commons = "org.beangle.commons" % "beangle-commons" % "5.6.23"
 val beangle_cdi = "org.beangle.cdi" % "beangle-cdi" % "0.7.0"
 
 lazy val root = (project in file("."))
@@ -32,5 +32,5 @@ lazy val root = (project in file("."))
     common,
     libraryDependencies ++= Seq(logback_classic % "test", scalatest),
     libraryDependencies ++= Seq(beangle_commons, beangle_cdi),
-    libraryDependencies ++= Seq(protobuf % "optional"),
+    libraryDependencies ++= Seq(protobuf % "optional")
   )
