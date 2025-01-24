@@ -17,9 +17,9 @@
 
 package org.beangle.serializer.json
 
-import java.io.File
-import org.scalatest.matchers.should.Matchers
+import org.beangle.commons.json.JsonObject
 import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
 class JsonSerializerTest extends AnyFunSpec with Matchers {
 
@@ -31,6 +31,7 @@ class JsonSerializerTest extends AnyFunSpec with Matchers {
       json.alias("list", classOf[::[_]])
 
       //println(json.serialize(List(Some(new Person("002", "admin2")), new Person("001", "admin"))))
+      println(json.serialize(JsonObject("pgpKey" -> "sample", "email" -> "sample@some.com")))
       //println(json.serialize(Array("a", "b")))
       //println(json.serialize(new Member))
     }
@@ -43,7 +44,7 @@ class JsonSerializerTest extends AnyFunSpec with Matchers {
       //println(jsonp.serialize(Array("a", "b")))
       //println(jsonp.serialize(new Member))
     }
-    it("seriailizer Long"){
+    it("seriailizer Long") {
       val json = JsonSerializer()
       json.serialize(Long.MaxValue) should equal("\"9223372036854775807\"")
     }

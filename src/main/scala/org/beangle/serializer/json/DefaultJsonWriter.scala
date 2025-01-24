@@ -18,8 +18,7 @@
 package org.beangle.serializer.json
 
 import java.io.Writer
-
-import org.beangle.serializer.text.marshal.MarshallerRegistry
+import org.beangle.serializer.text.marshal.{MarshallerRegistry, MarshallingContext}
 import org.beangle.serializer.text.marshal.Type.{Collection, Object}
 
 class DefaultJsonWriter(writer: Writer, registry: MarshallerRegistry) extends AbstractJsonWriter(writer, registry) {
@@ -60,4 +59,18 @@ class DefaultJsonWriter(writer: Writer, registry: MarshallerRegistry) extends Ab
     if (pathStack.size == 0) writer.flush()
   }
 
+}
+
+class DefaultJsonpWriter(writer: Writer, registry: MarshallerRegistry) extends DefaultJsonWriter(writer, registry) {
+  var callbackName: String = "callback"
+
+  override def start(context: MarshallingContext): Unit = {
+    val callback = context.params.getOrElse(callbackName, "callback").asInstanceOf[String]
+    writer.write(callback)
+    writer.write('(')
+  }
+
+  override def end(context: MarshallingContext): Unit = {
+    writer.write(')')
+  }
 }

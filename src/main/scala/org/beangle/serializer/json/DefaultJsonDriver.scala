@@ -17,14 +17,22 @@
 
 package org.beangle.serializer.json
 
-import java.io.Writer
-import org.beangle.serializer.text.io.{ AbstractDriver, StreamWriter }
 import org.beangle.commons.io.BufferedWriter
+import org.beangle.serializer.text.io.{AbstractDriver, StreamDriver, StreamWriter}
 
-class DefaultJsonDriver(encoding: String = "UTF-8") extends AbstractDriver(encoding) with JsonDriver {
+import java.io.Writer
+
+class DefaultJsonDriver(encoding: String = "UTF-8") extends AbstractDriver(encoding), JsonDriver {
 
   def createWriter(out: Writer, params: Map[String, Any]): StreamWriter = {
     if (params.contains("pretty")) new PrettyJsonWriter(new BufferedWriter(out), registry)
     else new DefaultJsonWriter(new BufferedWriter(out), registry)
+  }
+}
+
+class DefaultJsonpDriver(encoding: String = "UTF-8") extends AbstractDriver(encoding), StreamDriver {
+
+  def createWriter(out: Writer, params: Map[String, Any]): StreamWriter = {
+    new DefaultJsonpWriter(new BufferedWriter(out), registry)
   }
 }

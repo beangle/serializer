@@ -17,10 +17,12 @@
 
 package org.beangle.serializer.json
 
+import org.beangle.commons.collection.Properties
+import org.beangle.commons.json.JsonObject
+import org.beangle.commons.net.Networks
+
 import java.math.BigInteger
 import java.util as ju
-import org.beangle.commons.collection.Properties
-import org.beangle.commons.net.Networks
 
 class Person(var code: String, var name: String) {
   var address = Address("minzu", "500", "jiading")
@@ -38,10 +40,13 @@ class Person(var code: String, var name: String) {
   val locale = ju.Locale.SIMPLIFIED_CHINESE
   val homepage = Networks.url("http://www.some.com/info")
   var birthAt = java.sql.Time.valueOf("23:23:23")
-  var remark = """
+  var remark =
+    """
                 A very famous Basketball Player, and
                 so ... & <>"""
   var families = Map("wife" -> "a girl", "daught" -> "ketty")
+
+  var profile: JsonObject = JsonObject("pgpKey" -> "sample", "email" -> "sample@some.com")
 
   var friends = new Properties()
   friends.put("jack", Some("Jack Jackson"))
@@ -61,6 +66,7 @@ class Member {
   families.put("wife", "a girl")
   families.put("daught", "ketty")
 }
+
 class Skill(val name: String) {
 
   def excellent: Boolean = name.contains("Best")

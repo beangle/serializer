@@ -17,12 +17,11 @@
 
 package org.beangle.serializer.text.marshal
 
-import java.{util => ju}
-
-import org.beangle.commons.collection.Properties
+import org.beangle.commons.bean.DynamicBean
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
-import org.beangle.serializer.text.marshal.Type
+
+import java.util as ju
 
 class PropertiesMarshaller(val mapper: Mapper) extends Marshaller[ju.Properties] {
 
@@ -45,9 +44,9 @@ class PropertiesMarshaller(val mapper: Mapper) extends Marshaller[ju.Properties]
 
 }
 
-class JsonObjectMarshaller(val mapper: Mapper) extends Marshaller[Properties] {
+class JsonObjectMarshaller(val mapper: Mapper) extends Marshaller[DynamicBean] {
 
-  def marshal(source: Properties, writer: StreamWriter, context: MarshallingContext): Unit = {
+  override def marshal(source: DynamicBean, writer: StreamWriter, context: MarshallingContext): Unit = {
     val iter = source.keys.iterator
     while (iter.hasNext) {
       val key = iter.next()

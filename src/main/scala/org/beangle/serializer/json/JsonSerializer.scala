@@ -17,12 +17,10 @@
 
 package org.beangle.serializer.json
 
-import org.beangle.commons.activation.MediaTypes
+import org.beangle.commons.activation.{MediaType, MediaTypes}
 import org.beangle.serializer.text.AbstractSerializer
-import org.beangle.serializer.text.mapper.{ DefaultMapper, Mapper }
-import org.beangle.serializer.text.marshal.{ DefaultMarshallerRegistry, MarshallerRegistry }
-
-import org.beangle.commons.activation.MediaType
+import org.beangle.serializer.text.mapper.{DefaultMapper, Mapper}
+import org.beangle.serializer.text.marshal.{DefaultMarshallerRegistry, MarshallerRegistry}
 
 object JsonSerializer {
 
@@ -33,6 +31,8 @@ object JsonSerializer {
     driver.registry = registry
     new JsonSerializer(driver, mapper, registry)
   }
+
+  val Default = JsonpSerializer()
 }
 
 class JsonSerializer(val driver: JsonDriver, val mapper: Mapper, val registry: MarshallerRegistry)
@@ -42,4 +42,23 @@ class JsonSerializer(val driver: JsonDriver, val mapper: Mapper, val registry: M
     List(MediaTypes.ApplicationJson)
   }
 
+}
+
+object JsonpSerializer {
+
+  def apply(): JsonpSerializer = {
+    val driver = new DefaultJsonpDriver
+    val mapper = new DefaultMapper
+    val registry = new DefaultMarshallerRegistry(mapper)
+    driver.registry = registry
+    new JsonpSerializer(driver, mapper, registry)
+  }
+}
+
+class JsonpSerializer(val driver: DefaultJsonpDriver, val mapper: Mapper, val registry: MarshallerRegistry)
+  extends AbstractSerializer {
+
+  override def mediaTypes: Seq[MediaType] = {
+    List(MediaTypes.ApplicationJavascript)
+  }
 }

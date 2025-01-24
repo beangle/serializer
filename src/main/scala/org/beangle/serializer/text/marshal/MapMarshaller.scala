@@ -17,11 +17,11 @@
 
 package org.beangle.serializer.text.marshal
 
-import java.{ util => ju }
-
-import org.beangle.commons.collection.Properties
+import org.beangle.commons.bean.DynamicBean
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
+
+import java.util as ju
 
 abstract class AbstractMapMarshaller[T] extends Marshaller[T] {
   protected def writeItem(key: Boolean, item: Object, writer: StreamWriter, context: MarshallingContext): Unit = {
@@ -55,7 +55,7 @@ class MapMarshaller(mapper: Mapper) extends AbstractMapMarshaller[collection.Map
   }
 
   override def support(clazz: Class[_]): Boolean = {
-    clazz != classOf[Properties]
+    !classOf[DynamicBean].isAssignableFrom(clazz)
   }
 
 }

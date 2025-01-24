@@ -17,10 +17,11 @@
 
 package org.beangle.serializer.text.marshal
 
+import org.beangle.commons.lang.Enums
+import org.beangle.commons.lang.annotation.value
 import org.beangle.commons.lang.reflect.BeanInfos
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
-import org.beangle.serializer.text.marshal.Type
 
 class BeanMarshaller(val mapper: Mapper) extends Marshaller[Object] {
 
@@ -47,8 +48,7 @@ class BeanMarshaller(val mapper: Mapper) extends Marshaller[Object] {
 
   override def support(clazz: Class[_]): Boolean = {
     !(clazz.getName.startsWith("java.") || clazz.getName.startsWith("scala.") ||
-      clazz.isArray || classOf[Seq[_]].isAssignableFrom(clazz) ||
-      classOf[collection.Map[_, _]].isAssignableFrom(clazz))
+      clazz.isArray || classOf[Iterable[_]].isAssignableFrom(clazz) || Enums.isEnum(clazz) || clazz.isAnnotationPresent(classOf[value]))
   }
 
   override def targetType: Type = {
