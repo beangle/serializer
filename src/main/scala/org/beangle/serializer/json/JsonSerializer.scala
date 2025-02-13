@@ -32,7 +32,7 @@ object JsonSerializer {
     new JsonSerializer(driver, mapper, registry)
   }
 
-  val Default = JsonpSerializer()
+  val Default = JsonSerializer()
 }
 
 class JsonSerializer(val driver: JsonDriver, val mapper: Mapper, val registry: MarshallerRegistry)

@@ -18,7 +18,7 @@
 package org.beangle.serializer.text.marshal
 
 import org.beangle.commons.collection.{IdentityMap, IdentitySet}
-import org.beangle.commons.lang.reflect.BeanInfos
+import org.beangle.commons.lang.reflect.{BeanInfos, TypeInfo}
 import org.beangle.serializer.text.StreamSerializer
 import org.beangle.serializer.text.io.{Path, StreamWriter}
 
@@ -57,7 +57,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     params.get("elementType") match {
       case Some(cls) =>
         elementType = cls.asInstanceOf[Class[_]]
-        //search bean type (clazz maybe interface,so cache it first,ready for concret class)
+        //search bean type (clazz maybe interface,so cache it first,ready for concrete class)
         getProperties(elementType)
       case None =>
     }
@@ -65,15 +65,16 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
   }
 
   def getProperties(clazz: Class[_]): List[String] = {
-    val result = propertyMap.get(clazz) match {
+    propertyMap.get(clazz) match {
       case Some(p) => p
       case None =>
         if (registry.lookup(clazz).targetType == Type.Object) {
+          if (elementType == null && !isCollectionType(clazz)) elementType = clazz
           val p = searchProperties(clazz)
           if (null == p) {
             val readables = BeanInfos.get(clazz).readables
             val bp =
-              if (readables.contains("id") && null != elementType && elementType != clazz) {
+              if (readables.contains("id") && !TypeInfo.isCaseClass(clazz) && null != elementType && elementType != clazz) {
                 List("id")
               } else {
                 if (serializer.hierarchical) {
@@ -91,8 +92,6 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
           List()
         }
     }
-    if (elementType == null && !isCollectionType(clazz)) elementType = clazz
-    result
   }
 
   private def searchProperties(targetType: Class[_]): List[String] = {
