@@ -23,8 +23,8 @@ ThisBuild / developers := List(
 ThisBuild / description := "The Beangle Serializer Library"
 ThisBuild / homepage := Some(url("https://beangle.github.io/serializer/index.html"))
 
-val beangle_commons = "org.beangle.commons" % "beangle-commons" % "5.6.28"
-val beangle_cdi = "org.beangle.cdi" % "beangle-cdi" % "0.7.3"
+val beangle_commons = "org.beangle.commons" % "beangle-commons" % "5.6.30"
+val beangle_cdi = "org.beangle.cdi" % "beangle-cdi" % "0.7.4"
 
 lazy val root = (project in file("."))
   .settings(
