@@ -2,7 +2,7 @@ import org.beangle.parent.Dependencies.*
 import org.beangle.parent.Settings.*
 
 ThisBuild / organization := "org.beangle.serializer"
-ThisBuild / version := "0.1.20-SNAPSHOT"
+ThisBuild / version := "0.1.20"
 
 ThisBuild / scmInfo := Some(
   ScmInfo(
@@ -23,8 +23,8 @@ ThisBuild / developers := List(
 ThisBuild / description := "The Beangle Serializer Library"
 ThisBuild / homepage := Some(url("https://beangle.github.io/serializer/index.html"))
 
-val beangle_commons = "org.beangle.commons" % "beangle-commons" % "5.6.30"
-val beangle_cdi = "org.beangle.cdi" % "beangle-cdi" % "0.7.4"
+val beangle_commons = "org.beangle.commons" % "beangle-commons" % "5.6.32"
+val beangle_cdi = "org.beangle.cdi" % "beangle-cdi" % "0.7.5"
 
 lazy val root = (project in file("."))
   .settings(
