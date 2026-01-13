@@ -17,11 +17,10 @@
 
 package org.beangle.serializer.protobuf
 
-import org.beangle.commons.logging.Logging
-import org.scalatest.matchers.should.Matchers
 import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class ProtobufSerializerTest extends AnyFunSpec with Matchers with Logging {
+class ProtobufSerializerTest extends AnyFunSpec, Matchers {
   describe("ProtobufSerializer") {
     it("serializing") {
       val account = new Account("0001", "root")
