@@ -37,7 +37,7 @@ final class CsvSerializer(val driver: CsvDriver, val mapper: Mapper, val registr
   extends AbstractSerializer {
 
   override def mediaTypes: Seq[MediaType] = {
-    List(MediaTypes.TextCsv)
+    List(MediaTypes.csv)
   }
 
   override def serialize(item: Any, writer: StreamWriter, params: Map[String, Any]): Unit = {
