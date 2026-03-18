@@ -71,10 +71,15 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     register(new JsonObjectMarshaller(mapper))
     register(new NumberMarshaller)
     register(new BooleanMarshaller)
+
     register(new DateMarshaller)
+    register(new LocalDateMarshaller)
     register(new SqlDateMarshaller)
+
     register(new CalendarMarshaller)
     register(new TimestampMarshaller)
+    register(new InstantMarshaller)
+
     register(new TimeMarshaller)
     register(new EnumMarshaller)
   }

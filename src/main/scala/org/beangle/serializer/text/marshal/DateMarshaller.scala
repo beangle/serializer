@@ -17,12 +17,14 @@
 
 package org.beangle.serializer.text.marshal
 
-import java.sql.{ Date, Time, Timestamp }
-import java.text.{ DateFormat, SimpleDateFormat }
-import java.util.{ Calendar, Date => juDate }
-
 import org.beangle.commons.lang.time.DateFormats
 import org.beangle.serializer.text.io.StreamWriter
+
+import java.sql.{Date, Time, Timestamp}
+import java.text.{DateFormat, SimpleDateFormat}
+import java.time.format.DateTimeFormatter
+import java.time.{Instant, LocalDate}
+import java.util.{Calendar, Date as juDate}
 
 class DateMarshaller(val format: DateFormat = DateFormats.UTC) extends Marshaller[juDate] {
   override def marshal(source: juDate, writer: StreamWriter, context: MarshallingContext): Unit = {
@@ -51,5 +53,17 @@ class TimestampMarshaller(val format: DateFormat = DateFormats.UTC) extends Mars
 class TimeMarshaller(val format: SimpleDateFormat = new SimpleDateFormat("HH:mm:ss")) extends Marshaller[Time] {
   override def marshal(source: Time, writer: StreamWriter, context: MarshallingContext): Unit = {
     writer.setValue(format.format(source))
+  }
+}
+
+class LocalDateMarshaller() extends Marshaller[LocalDate] {
+  override def marshal(source: LocalDate, writer: StreamWriter, context: MarshallingContext): Unit = {
+    writer.setValue(source.toString)
+  }
+}
+
+class InstantMarshaller() extends Marshaller[Instant] {
+  override def marshal(source: Instant, writer: StreamWriter, context: MarshallingContext): Unit = {
+    writer.setValue(DateTimeFormatter.ISO_INSTANT.format(source))
   }
 }
