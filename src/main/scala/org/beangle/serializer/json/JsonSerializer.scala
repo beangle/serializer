@@ -39,7 +39,7 @@ class JsonSerializer(val driver: JsonDriver, val mapper: Mapper, val registry: M
   extends AbstractSerializer {
 
   override def mediaTypes: Seq[MediaType] = {
-    List(MediaTypes.json)
+    List(MediaTypes.json, MediaTypes.jsonApi)
   }
 
 }
