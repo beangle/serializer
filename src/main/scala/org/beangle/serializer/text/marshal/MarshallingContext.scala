@@ -43,7 +43,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
       propertyMap ++= properties
     } else {
       properties foreach { tuple =>
-        val getters = BeanInfos.get(tuple._1).readables
+        val getters = BeanInfos.get(tuple._1).properties
         val filted = new collection.mutable.ListBuffer[String]
         tuple._2 foreach { p =>
           getters.get(p) match {
@@ -72,7 +72,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
           if (elementType == null && !isCollectionType(clazz)) elementType = clazz
           val p = searchProperties(clazz)
           if (null == p) {
-            val readables = BeanInfos.get(clazz).readables
+            val readables = BeanInfos.get(clazz).properties
             val bp =
               if (readables.contains("id") && !TypeInfo.isCaseClass(clazz) && null != elementType && elementType != clazz) {
                 List("id")

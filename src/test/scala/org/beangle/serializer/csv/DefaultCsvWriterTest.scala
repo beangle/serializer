@@ -19,6 +19,7 @@ package org.beangle.serializer.csv
 
 import org.beangle.commons.lang.SystemInfo
 import org.beangle.commons.lang.reflect.BeanInfos
+import org.beangle.commons.bean.meta.MetaModels
 import org.beangle.serializer.text.AbstractSerializer
 import org.beangle.serializer.text.marshal.MarshallingContext
 import org.scalatest.funspec.AnyFunSpec
@@ -33,8 +34,8 @@ class DefaultCsvWriterTest extends AnyFunSpec with Matchers {
     it("getAttributes") {
       val serializer = CsvSerializer().asInstanceOf[AbstractSerializer]
       val os = new FileOutputStream(SystemInfo.tmpDir + "/a.csv")
-      BeanInfos.of(classOf[Person])
-      val bia = BeanInfos.of(classOf[Address])
+      BeanInfos.register(MetaModels.of(classOf[Person]))
+      val bia = BeanInfos.register(MetaModels.of(classOf[Address]))
       val params = Map("properties" -> List(
         classOf[Person] -> List("code", "name", "accountMoney1", "bestSkill", "skills", "families", "sidekick", "address"),
         classOf[Skill] -> List("name")))

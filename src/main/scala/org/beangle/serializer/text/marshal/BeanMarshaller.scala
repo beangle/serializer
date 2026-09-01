@@ -33,7 +33,7 @@ class BeanMarshaller(val mapper: Mapper) extends Marshaller[Object] {
       properties foreach { name =>
         val getter = getters(name)
         if (!getter.isTransient) {
-          val value = extractOption(getter.getter.get.invoke(source))
+          val value = extractOption(getter.getter.invoke(source))
           if (null != value) {
             writer.startNode(mapper.serializedMember(source.getClass, name), value.getClass)
             context.marshal(value)

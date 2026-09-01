@@ -17,17 +17,21 @@
 
 package org.beangle.serializer.text.marshal
 
-import org.beangle.commons.collection.IdentityCache
 import org.beangle.commons.lang.reflect.Reflections
 import org.beangle.serializer.text.SerializeException
 import org.beangle.serializer.text.mapper.Mapper
 
+import java.util.concurrent.atomic.AtomicReference
 import scala.collection.mutable
 import scala.language.existentials
 
 class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
 
-  private val cache = new IdentityCache[Class[_], Marshaller[_]]
+  /** 进程级序列化器缓存：AtomicReference + immutable HashMap（Class 键即 identity 语义），
+   *  读无锁、写 CAS 重试，无 monitor。
+   */
+  private val cache = new AtomicReference(scala.collection.immutable.HashMap.empty[Class[_], Marshaller[_]])
+
   /**
     * [Object,List(BeanMarshaller,PrimitiveMarshaller)]
     */
@@ -36,13 +40,23 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
   registerBuiltin()
 
   override def lookup[T](clazz: Class[T]): Marshaller[T] = {
-    var converter = cache.get(clazz)
-    if (null == converter) {
-      converter = searchMarshaller(clazz)
-      if (null == converter) throw new SerializeException("No converter specified for " + clazz, null)
-      else cache.put(clazz, converter)
+    cache.get.get(clazz) match {
+      case Some(converter) => converter.asInstanceOf[Marshaller[T]]
+      case None =>
+        val converter = searchMarshaller(clazz)
+        if (null == converter) throw new SerializeException("No converter specified for " + clazz, null)
+        else put(clazz, converter)
+        converter.asInstanceOf[Marshaller[T]]
     }
-    converter.asInstanceOf[Marshaller[T]]
+  }
+
+  /** CAS 写：基于当前快照合并，失败说明被并发修改则重试。 */
+  private def put(clazz: Class[_], converter: Marshaller[_]): Unit = {
+    var done = false
+    while (!done) {
+      val old = cache.get
+      done = cache.compareAndSet(old, old + (clazz -> converter))
+    }
   }
 
   override def register[T](converter: Marshaller[T]): Unit = {
