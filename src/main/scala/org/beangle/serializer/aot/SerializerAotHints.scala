@@ -44,14 +44,18 @@ class SerializerAotHints extends AotHintRegistrar {
     hints.registerType(classOf[org.beangle.serializer.xml.XmlDriver])
   }
 
-  /** 注册 JDK 序列化涉及的基本类型与 java.time 序列化代理。
+  /** 注册 JDK 序列化涉及的基本类型、根构造器与 java.time 序列化代理。
    *
    *  Java 序列化（如 caffeine jcache 的 JavaSerializationCopier）对缓存键/值做
-   *  序列化往返时，ObjectStreamClass 需要把参与序列化的 JDK 类型也注册进
-   *  serialization-config，否则写侧报 "SerializationConstructorAccessor class
-   *  not found for java.lang.String"。
+   *  序列化往返：JDK 类型缺失时写侧报 "SerializationConstructorAccessor class not
+   *  found"；反序列化实例化以第一个非序列化父类的无参构造器（多数情况下就是
+   *  java.lang.Object）为根，未登记时 GraalVM 25 抛 "Cannot reflectively invoke
+   *  constructor 'public java.lang.Object()'"。Object 不是 Serializable，且 java.*
+   *  会被 addType 的 JDK 前缀过滤，故按类名显式登记。
    */
   private def registerSerializationModels(): Unit = {
+    hints.registerConstructor("java.lang.Object")
+
     hints.registerSerializable(
       classOf[java.lang.String], classOf[java.lang.Boolean], classOf[java.lang.Integer],
       classOf[java.lang.Long], classOf[java.lang.Short], classOf[java.lang.Byte],
