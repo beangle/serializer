@@ -20,20 +20,21 @@ package org.beangle.serializer.protobuf
 import java.io.{Externalizable, ObjectInput, ObjectOutput}
 
 import org.beangle.commons.collection.Collections
+import scala.compiletime.uninitialized
 
 final class Account extends Externalizable with Serializable {
 
-  var name: String = _
+  var name: String = uninitialized
 
-  var description: String = _
+  var description: String = uninitialized
 
   var remoteToken: Option[String] = None
 
-  var status: Int = _
+  var status: Int = uninitialized
 
-  var authorities: String = _
+  var authorities: String = uninitialized
 
-  var permissions: String = _
+  var permissions: String = uninitialized
 
   var details: Map[String, String] = Map.empty
 

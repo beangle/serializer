@@ -21,6 +21,7 @@ import java.io.Writer
 
 import org.beangle.serializer.text.io.{AbstractWriter, StreamException}
 import org.beangle.serializer.text.marshal.MarshallingContext
+import scala.compiletime.uninitialized
 
 object PrettyXmlWriter {
   val NULL: Array[Char] = "&#x0;".toCharArray
@@ -41,11 +42,11 @@ class PrettyXmlWriter(writer: Writer, lineIndenter: Array[Char], newLine: Array[
     this(writer, Array(' ', ' '), Array('\n'))
   }
 
-  private var tagInProgress: Boolean = _
-  private var readyForNewLine: Boolean = _
-  private var tagIsEmpty: Boolean = _
+  private var tagInProgress: Boolean = uninitialized
+  private var readyForNewLine: Boolean = uninitialized
+  private var tagIsEmpty: Boolean = uninitialized
 
-  override def startNode(name: String, clazz: Class[_]): Unit = {
+  override def startNode(name: String, clazz: Class[?]): Unit = {
     val depth = pathStack.size
     tagIsEmpty = false
     finishTag(depth)

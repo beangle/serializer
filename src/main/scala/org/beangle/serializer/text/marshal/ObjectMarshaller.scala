@@ -24,7 +24,7 @@ object ObjectMarshaller extends Marshaller[Object] {
     writer.setValue(source.toString)
   }
 
-  override def support(clazz: Class[_]): Boolean = {
+  override def support(clazz: Class[?]): Boolean = {
     !clazz.isArray
   }
 }

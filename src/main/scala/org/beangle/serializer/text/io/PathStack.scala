@@ -19,7 +19,7 @@ package org.beangle.serializer.text.io
 
 import org.beangle.commons.lang.primitive.MutableInt
 
-class PathElement(val name: String, val clazz: Class[_]) {}
+class PathElement(val name: String, val clazz: Class[?]) {}
 
 class PathStack(initialCapacity: Int = 16) {
   //point to empty slot
@@ -28,7 +28,7 @@ class PathStack(initialCapacity: Int = 16) {
   private var elements = new Array[PathElement](initialCapacity)
   private var indexMapStack = new Array[collection.mutable.HashMap[String, MutableInt]](initialCapacity)
 
-  def push(name: String, clazz: Class[_]): Unit = {
+  def push(name: String, clazz: Class[?]): Unit = {
     if (pointer + 1 >= capacity) resizeStacks(capacity * 2)
     elements(pointer) = new PathElement(name, clazz)
 

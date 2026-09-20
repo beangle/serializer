@@ -21,15 +21,15 @@ class Null {}
 
 trait Mapper {
 
-  def serializedClass(clazz: Class[_]): String
+  def serializedClass(clazz: Class[?]): String
 
-  def serializedMember(clazz: Class[_], memberName: String): String
+  def serializedMember(clazz: Class[?], memberName: String): String
 
   def aliasForSystemAttribute(name: String): String
 
-  def alias(alias: String, clazz: Class[_]): Unit
+  def alias(alias: String, clazz: Class[?]): Unit
 
   def alias(alias: String, className: String): Unit
 
-  def aliasUnCamel(classes: Class[_]*): Unit
+  def aliasUnCamel(classes: Class[?]*): Unit
 }

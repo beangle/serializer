@@ -46,9 +46,9 @@ class BeanMarshaller(val mapper: Mapper) extends Marshaller[Object] {
     }
   }
 
-  override def support(clazz: Class[_]): Boolean = {
+  override def support(clazz: Class[?]): Boolean = {
     !(clazz.getName.startsWith("java.") || clazz.getName.startsWith("scala.") ||
-      clazz.isArray || classOf[Iterable[_]].isAssignableFrom(clazz) || Enums.isEnum(clazz) || clazz.isAnnotationPresent(classOf[value]))
+      clazz.isArray || classOf[Iterable[?]].isAssignableFrom(clazz) || Enums.isEnum(clazz) || clazz.isAnnotationPresent(classOf[value]))
   }
 
   override def targetType: Type = {

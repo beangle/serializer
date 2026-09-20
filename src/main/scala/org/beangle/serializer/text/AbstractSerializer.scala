@@ -30,7 +30,7 @@ abstract class AbstractSerializer extends StreamSerializer {
   def mapper: Mapper
   def registry: MarshallerRegistry
 
-  def alias(alias: String, clazz: Class[_]): Unit = {
+  def alias(alias: String, clazz: Class[?]): Unit = {
     mapper.alias(alias, clazz)
   }
 

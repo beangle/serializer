@@ -28,7 +28,7 @@ class JsonSerializerTest extends AnyFunSpec with Matchers {
       val json = JsonSerializer()
       json.alias("person", classOf[Person])
       json.alias("address", classOf[Address])
-      json.alias("list", classOf[::[_]])
+      json.alias("list", classOf[::[?]])
 
       //println(json.serialize(List(Some(new Person("002", "admin2")), new Person("001", "admin"))))
       println(json.serialize(JsonObject("pgpKey" -> "sample", "email" -> "sample@some.com")))
@@ -39,7 +39,7 @@ class JsonSerializerTest extends AnyFunSpec with Matchers {
       val jsonp = JsonpSerializer()
       jsonp.alias("person", classOf[Person])
       jsonp.alias("address", classOf[Address])
-      jsonp.alias("list", classOf[::[_]])
+      jsonp.alias("list", classOf[::[?]])
       //println(jsonp.serialize(List(Some(new Person("002", "admin2")), new Person("001", "admin"))))
       //println(jsonp.serialize(Array("a", "b")))
       //println(jsonp.serialize(new Member))

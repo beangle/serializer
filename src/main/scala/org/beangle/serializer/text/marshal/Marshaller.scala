@@ -26,7 +26,7 @@ import org.beangle.serializer.text.marshal.Type
 trait Marshaller[T] {
   def marshal(source: T, writer: StreamWriter, context: MarshallingContext): Unit
 
-  def support(clazz: Class[_]): Boolean = {
+  def support(clazz: Class[?]): Boolean = {
     true
   }
 

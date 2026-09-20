@@ -23,10 +23,11 @@ import org.beangle.commons.net.Networks
 
 import java.math.BigInteger
 import java.util as ju
+import scala.compiletime.uninitialized
 
 class Person(var code: String, var name: String) {
   var address = Address("minzu", "500", "jiading")
-  var mobile: String = _
+  var mobile: String = uninitialized
   var skills = List(new Skill("Play Basketball Best"), new Skill("Play football"))
   var skillsArray = Array(new Skill("Play Basketball Best"), new Skill("Play football"))
   val bestSkill = Some(skills.head)

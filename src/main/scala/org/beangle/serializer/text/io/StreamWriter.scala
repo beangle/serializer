@@ -23,7 +23,7 @@ trait StreamWriter {
 
   def currentPath: Path
 
-  def startNode(name: String, clazz: Class[_]): Unit
+  def startNode(name: String, clazz: Class[?]): Unit
 
   def addAttribute(key: String, value: String): Unit
 

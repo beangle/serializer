@@ -30,12 +30,12 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
   /** 进程级序列化器缓存：AtomicReference + immutable HashMap（Class 键即 identity 语义），
    *  读无锁、写 CAS 重试，无 monitor。
    */
-  private val cache = new AtomicReference(scala.collection.immutable.HashMap.empty[Class[_], Marshaller[_]])
+  private val cache = new AtomicReference(scala.collection.immutable.HashMap.empty[Class[?], Marshaller[?]])
 
   /**
     * [Object,List(BeanMarshaller,PrimitiveMarshaller)]
     */
-  private val converterMap = new mutable.HashMap[Class[_], Set[Marshaller[_]]]
+  private val converterMap = new mutable.HashMap[Class[?], Set[Marshaller[?]]]
 
   registerBuiltin()
 
@@ -51,7 +51,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
   }
 
   /** CAS 写：基于当前快照合并，失败说明被并发修改则重试。 */
-  private def put(clazz: Class[_], converter: Marshaller[_]): Unit = {
+  private def put(clazz: Class[?], converter: Marshaller[?]): Unit = {
     var done = false
     while (!done) {
       val old = cache.get
@@ -60,7 +60,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
   }
 
   override def register[T](converter: Marshaller[T]): Unit = {
-    val clazz = Reflections.getGenericParamTypes(converter.getClass, classOf[Marshaller[_]])("T")
+    val clazz = Reflections.getGenericParamTypes(converter.getClass, classOf[Marshaller[?]])("T")
     converterMap.get(clazz) match {
       case Some(converters) =>
         converters.find(_.getClass == converter.getClass) match {
@@ -98,9 +98,9 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     register(new EnumMarshaller)
   }
 
-  private def searchMarshaller(sourceType: Class[_]): Marshaller[_] = {
-    val interfaces = new mutable.LinkedHashSet[Class[_]]
-    val classQueue = new mutable.Queue[Class[_]]
+  private def searchMarshaller(sourceType: Class[?]): Marshaller[?] = {
+    val interfaces = new mutable.LinkedHashSet[Class[?]]
+    val classQueue = new mutable.Queue[Class[?]]
     classQueue += sourceType
     while (classQueue.nonEmpty) {
       val currentClass = classQueue.dequeue()
@@ -125,7 +125,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     }
   }
 
-  private def searchSupport(clazz: Class[_], converterSet: Option[Set[Marshaller[_]]]): Marshaller[_] = {
+  private def searchSupport(clazz: Class[?], converterSet: Option[Set[Marshaller[?]]]): Marshaller[?] = {
     converterSet match {
       case Some(converters) =>
         val iter = converters.iterator
@@ -138,7 +138,7 @@ class DefaultMarshallerRegistry(mapper: Mapper) extends MarshallerRegistry {
     }
   }
 
-  private def addInterfaces(interfaceType: Class[_], interfaces: mutable.Set[Class[_]]): Unit = {
+  private def addInterfaces(interfaceType: Class[?], interfaces: mutable.Set[Class[?]]): Unit = {
     interfaces.add(interfaceType)
     for (inheritedInterface <- interfaceType.getInterfaces) addInterfaces(inheritedInterface, interfaces)
   }

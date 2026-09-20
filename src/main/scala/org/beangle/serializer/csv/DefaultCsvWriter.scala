@@ -30,7 +30,7 @@ class DefaultCsvWriter(out: Writer) extends AbstractWriter {
 
   val buf = new collection.mutable.ListBuffer[String]
 
-  def startNode(name: String, clazz: Class[_]): Unit = {
+  def startNode(name: String, clazz: Class[?]): Unit = {
     pathStack.push(name, clazz)
   }
 
@@ -71,7 +71,7 @@ class DefaultCsvWriter(out: Writer) extends AbstractWriter {
     val propertyNames = new ListBuffer[String]
     if (null != context.elementType) {
       val manifest = BeanInfos.get(context.elementType)
-      val processed = new collection.mutable.HashSet[Class[_]]
+      val processed = new collection.mutable.HashSet[Class[?]]
       processed += context.elementType
       for (name <- context.getProperties(context.elementType)) {
         addAttribute("", name, manifest.getPropertyType(name).get, propertyNames, context, processed)
@@ -80,8 +80,8 @@ class DefaultCsvWriter(out: Writer) extends AbstractWriter {
     propertyNames.toArray
   }
 
-  private def addAttribute(prefix: String, name: String, clazz: Class[_], names: ListBuffer[String],
-                           context: MarshallingContext, processed: collection.mutable.HashSet[Class[_]]): Unit = {
+  private def addAttribute(prefix: String, name: String, clazz: Class[?], names: ListBuffer[String],
+                           context: MarshallingContext, processed: collection.mutable.HashSet[Class[?]]): Unit = {
     if (processed.contains(clazz)) {
       names += (prefix + name)
       return

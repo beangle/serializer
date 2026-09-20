@@ -62,8 +62,8 @@ class PageMarshaller(val mapper: Mapper) extends Marshaller[Page[Object]] {
     writer.endNode()
   }
 
-  override def support(clazz: Class[_]): Boolean = {
-    classOf[Page[_]].isAssignableFrom(clazz)
+  override def support(clazz: Class[?]): Boolean = {
+    classOf[Page[?]].isAssignableFrom(clazz)
   }
 
   override def targetType: Type = {

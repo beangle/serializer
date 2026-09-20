@@ -27,7 +27,7 @@ class ProtobufSerializer extends AbstractBinarySerializer {
     MediaTypes.parse("application/x-protobuf")
   }
 
-  override def registerClass(clazz: Class[_]): Unit = {
+  override def registerClass(clazz: Class[?]): Unit = {
     register(clazz, Reflections.newInstance[ObjectSerializer](clazz.getName + "ProtobufSerializer"))
   }
 

@@ -29,7 +29,7 @@ class XmlSerializerTest extends AnyFunSpec with Matchers {
       val serializer = XmlSerializer()
       serializer.alias("person", classOf[Person])
       serializer.alias("address", classOf[Address])
-      serializer.alias("list", classOf[::[_]])
+      serializer.alias("list", classOf[::[?]])
       //println(serializer.serialize(List(Some(new Person("002", "admin2")), new Person("001", "admin"))))
       //println(serializer.serialize("3"))
       //println(serializer.serialize(new SinglePage(1, 2, 200, List(new Person("002", "admin2"), new Person("001", "admin")))))

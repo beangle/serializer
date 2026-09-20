@@ -24,6 +24,7 @@ import org.beangle.serializer.text.io.{Path, StreamWriter}
 
 import scala.collection.mutable
 import scala.language.existentials
+import scala.compiletime.uninitialized
 
 class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWriter, val registry: MarshallerRegistry, val params: Map[String, Any]) {
 
@@ -31,14 +32,14 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
 
   val currents = new IdentitySet[AnyRef]
 
-  var elementType: Class[_] = _
+  var elementType: Class[?] = uninitialized
 
-  val propertyMap = new collection.mutable.HashMap[Class[_], List[String]]
+  val propertyMap = new collection.mutable.HashMap[Class[?], List[String]]
 
   init()
 
   def init(): Unit = {
-    val properties = params.getOrElse("properties", List.empty).asInstanceOf[Seq[(Class[_], List[String])]]
+    val properties = params.getOrElse("properties", List.empty).asInstanceOf[Seq[(Class[?], List[String])]]
     if (serializer.hierarchical) {
       propertyMap ++= properties
     } else {
@@ -56,7 +57,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     }
     params.get("elementType") match {
       case Some(cls) =>
-        elementType = cls.asInstanceOf[Class[_]]
+        elementType = cls.asInstanceOf[Class[?]]
         //search bean type (clazz maybe interface,so cache it first,ready for concrete class)
         getProperties(elementType)
       case None =>
@@ -64,7 +65,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     if (properties.nonEmpty && null == elementType) elementType = properties.head._1
   }
 
-  def getProperties(clazz: Class[_]): List[String] = {
+  def getProperties(clazz: Class[?]): List[String] = {
     propertyMap.get(clazz) match {
       case Some(p) => p
       case None =>
@@ -94,9 +95,9 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     }
   }
 
-  private def searchProperties(targetType: Class[_]): List[String] = {
-    val interfaces = new mutable.LinkedHashSet[Class[_]]
-    val classQueue = new mutable.Queue[Class[_]]
+  private def searchProperties(targetType: Class[?]): List[String] = {
+    val interfaces = new mutable.LinkedHashSet[Class[?]]
+    val classQueue = new mutable.Queue[Class[?]]
     classQueue += targetType
     while (classQueue.nonEmpty) {
       val currentClass = classQueue.dequeue()
@@ -115,7 +116,7 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     null
   }
 
-  private def addInterfaces(interfaceType: Class[_], interfaces: mutable.Set[Class[_]]): Unit = {
+  private def addInterfaces(interfaceType: Class[?], interfaces: mutable.Set[Class[?]]): Unit = {
     interfaces.add(interfaceType)
     for (inheritedInterface <- interfaceType.getInterfaces) addInterfaces(inheritedInterface, interfaces)
   }
@@ -136,8 +137,8 @@ class MarshallingContext(val serializer: StreamSerializer, val writer: StreamWri
     references.get(item)
   }
 
-  private def isCollectionType(clazz: Class[_]): Boolean = {
-    clazz.isArray || classOf[java.util.Collection[_]].isAssignableFrom(clazz) || classOf[Iterable[_]].isAssignableFrom(clazz)
+  private def isCollectionType(clazz: Class[?]): Boolean = {
+    clazz.isArray || classOf[java.util.Collection[?]].isAssignableFrom(clazz) || classOf[Iterable[?]].isAssignableFrom(clazz)
   }
 
 }

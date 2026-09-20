@@ -23,7 +23,7 @@ import org.beangle.serializer.text.marshal.Type.{Collection, Object}
 
 class DefaultJsonWriter(writer: Writer, registry: MarshallerRegistry) extends AbstractJsonWriter(writer, registry) {
 
-  override def startNode(name: String, clazz: Class[_]): Unit = {
+  override def startNode(name: String, clazz: Class[?]): Unit = {
     val depth = pathStack.size
     val inArray = depth > 0 && registry.lookup(this.pathStack.peek().clazz).targetType == Collection
     pathStack.push(name, clazz)

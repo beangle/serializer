@@ -25,7 +25,7 @@ class NumberMarshaller extends Marshaller[Number] {
     writer.setValue(source.toString)
   }
 
-  override def support(clazz: Class[_]): Boolean = {
+  override def support(clazz: Class[?]): Boolean = {
     clazz.getName.startsWith("java.lang") ||
       clazz.getName.startsWith("java.math") ||
       clazz.getName.startsWith("scala.math")

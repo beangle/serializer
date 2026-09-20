@@ -29,7 +29,7 @@ class PrettyJsonWriter(writer: Writer, registry: MarshallerRegistry, lineIndente
     this(writer, registry, Array(' ', ' '), Array('\n'))
   }
 
-  override def startNode(name: String, clazz: Class[_]): Unit = {
+  override def startNode(name: String, clazz: Class[?]): Unit = {
     val depth = pathStack.size
     val inArray = depth > 0 && registry.lookup(this.pathStack.peek().clazz).targetType == Collection
     pathStack.push(name, clazz)

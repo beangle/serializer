@@ -54,7 +54,7 @@ class MapMarshaller(mapper: Mapper) extends AbstractMapMarshaller[collection.Map
     }
   }
 
-  override def support(clazz: Class[_]): Boolean = {
+  override def support(clazz: Class[?]): Boolean = {
     !classOf[DynamicBean].isAssignableFrom(clazz)
   }
 

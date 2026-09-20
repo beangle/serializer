@@ -25,7 +25,7 @@ import org.beangle.serializer.text.marshal.{MarshallerRegistry, MarshallingConte
 
 abstract class AbstractJsonWriter(val writer: Writer, val registry: MarshallerRegistry) extends AbstractWriter {
 
-  private val quotedClazzes: Set[Class[_]] = Set(classOf[String], classOf[Long], classOf[java.lang.Long],
+  private val quotedClazzes: Set[Class[?]] = Set(classOf[String], classOf[Long], classOf[java.lang.Long],
     classOf[java.math.BigInteger], classOf[java.math.BigDecimal],
     classOf[scala.math.BigInt], classOf[scala.math.BigDecimal]
   )
@@ -35,7 +35,7 @@ abstract class AbstractJsonWriter(val writer: Writer, val registry: MarshallerRe
     writeText(text.toCharArray, needQuoted(peekClz))
   }
 
-  private def needQuoted(clazz: Class[_]): Boolean = {
+  private def needQuoted(clazz: Class[?]): Boolean = {
     if (quotedClazzes.contains(clazz)) {
       true
     } else {

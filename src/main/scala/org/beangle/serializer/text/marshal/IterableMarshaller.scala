@@ -29,7 +29,7 @@ class IterableMarshaller(mapper: Mapper) extends AbstractIterableMarshaller[Iter
     }
   }
 
-  override def support(clazz: Class[_]): Boolean = {
-    !classOf[collection.Map[_, _]].isAssignableFrom(clazz) && !classOf[Page[_]].isAssignableFrom(clazz)
+  override def support(clazz: Class[?]): Boolean = {
+    !classOf[collection.Map[?, ?]].isAssignableFrom(clazz) && !classOf[Page[?]].isAssignableFrom(clazz)
   }
 }

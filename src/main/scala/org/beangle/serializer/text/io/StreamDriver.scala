@@ -19,9 +19,10 @@ package org.beangle.serializer.text.io
 
 import java.io.{ OutputStream, Writer }
 import org.beangle.serializer.text.marshal.MarshallerRegistry
+import scala.compiletime.uninitialized
 
 trait StreamDriver {
-  var registry: MarshallerRegistry = _
+  var registry: MarshallerRegistry = uninitialized
   def createWriter(out: Writer, params: Map[String, Any]): StreamWriter
   def createWriter(out: OutputStream, params: Map[String, Any]): StreamWriter
 }

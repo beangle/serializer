@@ -27,15 +27,15 @@ import scala.math.BigDecimal
 
 class DefaultMapper extends Mapper {
 
-  val classAlias = new collection.mutable.HashMap[Class[_], String]
+  val classAlias = new collection.mutable.HashMap[Class[?], String]
 
   aliasBuildin()
 
-  def alias(alias: String, clazz: Class[_]): Unit = {
+  def alias(alias: String, clazz: Class[?]): Unit = {
     classAlias.put(clazz, alias)
   }
 
-  def aliasUnCamel(classes: Class[_]*): Unit = {
+  def aliasUnCamel(classes: Class[?]*): Unit = {
     classes foreach { clazz =>
       classAlias.put(clazz, Strings.unCamel(clazz.getSimpleName))
     }
@@ -49,7 +49,7 @@ class DefaultMapper extends Mapper {
     }
   }
 
-  override def serializedClass(clazz: Class[_]): String = {
+  override def serializedClass(clazz: Class[?]): String = {
     var simpleName = clazz.getSimpleName
     if (simpleName.endsWith("Bean")) simpleName = simpleName.substring(0, simpleName.length() - 4)
     classAlias.getOrElse(clazz, Strings.unCamel(simpleName))
@@ -59,7 +59,7 @@ class DefaultMapper extends Mapper {
     name
   }
 
-  override def serializedMember(clazz: Class[_], memberName: String): String = {
+  override def serializedMember(clazz: Class[?], memberName: String): String = {
     memberName
   }
 
@@ -68,28 +68,28 @@ class DefaultMapper extends Mapper {
     alias("int", classOf[jl.Integer])
     alias("char", classOf[jl.Character])
     alias("big-int", classOf[java.math.BigInteger])
-    alias("java-class", classOf[Class[_]])
+    alias("java-class", classOf[Class[?]])
     aliasUnCamel(classOf[Null], classOf[jl.Float], classOf[jl.Double], classOf[jl.Long], classOf[jl.Short])
     aliasUnCamel(classOf[jl.Byte], classOf[jl.Boolean], classOf[jl.Number], classOf[jl.Object], classOf[BigDecimal])
     aliasUnCamel(classOf[jl.StringBuilder], classOf[StringBuffer], classOf[scala.StringBuilder])
-    aliasUnCamel(classOf[String], classOf[jl.reflect.Method], classOf[jl.reflect.Constructor[_]], classOf[jl.reflect.Field], classOf[ju.Date])
+    aliasUnCamel(classOf[String], classOf[jl.reflect.Method], classOf[jl.reflect.Constructor[?]], classOf[jl.reflect.Field], classOf[ju.Date])
     aliasUnCamel(classOf[URI], classOf[URL])
     aliasUnCamel(classOf[scala.math.BigInt], classOf[scala.math.BigDecimal])
 
     //java util
     alias("bit-set", classOf[ju.BitSet])
-    alias("map", classOf[ju.Map[_, _]])
-    alias("entry", classOf[ju.Map.Entry[_, _]])
+    alias("map", classOf[ju.Map[?, ?]])
+    alias("entry", classOf[ju.Map.Entry[?, ?]])
     alias("properties", classOf[ju.Properties])
-    alias("list", classOf[ju.List[_]])
-    alias("set", classOf[ju.Set[_]])
-    alias("sorted-set", classOf[ju.SortedSet[_]])
+    alias("list", classOf[ju.List[?]])
+    alias("set", classOf[ju.Set[?]])
+    alias("sorted-set", classOf[ju.SortedSet[?]])
 
-    alias("linked-list", classOf[ju.LinkedList[_]])
-    alias("vector", classOf[ju.Vector[_]])
-    alias("tree-map", classOf[ju.TreeMap[_, _]])
-    alias("tree-set", classOf[ju.TreeSet[_]])
-    alias("hashtable", classOf[ju.Hashtable[_, _]])
+    alias("linked-list", classOf[ju.LinkedList[?]])
+    alias("vector", classOf[ju.Vector[?]])
+    alias("tree-map", classOf[ju.TreeMap[?, ?]])
+    alias("tree-set", classOf[ju.TreeSet[?]])
+    alias("hashtable", classOf[ju.Hashtable[?, ?]])
 
     alias("empty-list", ju.Collections.emptyList.getClass)
     alias("empty-map", ju.Collections.emptyMap.getClass)
@@ -99,10 +99,10 @@ class DefaultMapper extends Mapper {
     alias("singleton-set", ju.Collections.singleton(this).getClass)
 
     //scala collection
-    alias("list", classOf[::[_]])
-    alias("list", classOf[collection.Seq[_]])
-    alias("set", classOf[collection.Set[_]])
-    alias("map", classOf[collection.Map[_, _]])
+    alias("list", classOf[::[?]])
+    alias("list", classOf[collection.Seq[?]])
+    alias("set", classOf[collection.Set[?]])
+    alias("map", classOf[collection.Map[?, ?]])
     alias("sql-timestamp", "java.sql.Timestamp")
     alias("sql-time", "java.sql.Time")
     alias("sql-date", "java.sql.Date")
@@ -112,9 +112,9 @@ class DefaultMapper extends Mapper {
     alias("gregorian-calendar", classOf[ju.Calendar])
 
     alias("duration", "javax.xml.datatype.Duration")
-    alias("concurrent-hash-map", classOf[ju.concurrent.ConcurrentHashMap[_, _]])
-    alias("enum-set", classOf[ju.EnumSet[_]])
-    alias("enum-map", classOf[ju.EnumMap[_, _]])
+    alias("concurrent-hash-map", classOf[ju.concurrent.ConcurrentHashMap[?, ?]])
+    alias("enum-set", classOf[ju.EnumSet[?]])
+    alias("enum-map", classOf[ju.EnumMap[?, ?]])
 
     alias("uuid", classOf[ju.UUID])
   }

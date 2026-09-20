@@ -43,7 +43,7 @@ class DefaultMarshallerRegistryTest extends AnyFunSpec with Matchers {
       assert(dateMarshaller.isInstanceOf[DateMarshaller])
     }
     it("lookup page marshaller") {
-      val marshaller = registry.lookup(classOf[SinglePage[_]])
+      val marshaller = registry.lookup(classOf[SinglePage[?]])
       assert(null != marshaller)
       assert(marshaller.targetType == Type.Object)
     }

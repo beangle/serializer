@@ -37,7 +37,7 @@ class ArrayMarshaller(val mapper: Mapper) extends Marshaller[Object] {
     }
   }
 
-  override def support(clazz: Class[_]): Boolean = {
+  override def support(clazz: Class[?]): Boolean = {
     clazz.isArray
   }
 

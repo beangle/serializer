@@ -20,7 +20,7 @@ package org.beangle.serializer.text.marshal
 import org.beangle.serializer.text.io.StreamWriter
 import org.beangle.serializer.text.mapper.Mapper
 
-abstract class AbstractIterableMarshaller[T <: Iterable[_]](val mapper: Mapper) extends Marshaller[T] {
+abstract class AbstractIterableMarshaller[T <: Iterable[?]](val mapper: Mapper) extends Marshaller[T] {
 
   protected def writeItem(item: Object, writer: StreamWriter, context: MarshallingContext): Unit = {
     val realitem = extractOption(item)

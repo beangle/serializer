@@ -33,7 +33,7 @@ class TupleMarshaller(mapper: Mapper) extends Marshaller[Product] {
     }
   }
 
-  override def support(clazz: Class[_]): Boolean = {
+  override def support(clazz: Class[?]): Boolean = {
     clazz.getSimpleName.startsWith("Tuple")
   }
 
